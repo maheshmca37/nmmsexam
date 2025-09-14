@@ -1,0 +1,179 @@
+
+.container {
+    display: flex;
+    flex-direction: column; /* Stack items vertically */
+    height: 100vh; /* Full viewport height */
+}
+
+.exam,
+.allbtns {
+    padding: 30px; /* Adjust padding as needed */
+    box-sizing: border-box; /* Include padding in width calculations */
+}
+
+.exam {
+    flex: 25%;
+    background-color: #e6eef0; /* Example background color */
+}
+
+.allbtns {
+    flex: 75%;
+    background-color: #501899; /* Example background color */
+}
+*
+{
+    margin: 0;
+    padding: 0;
+    font-family: 'poppins', sans-serif;
+    box-sizing: border-box;
+
+}
+.app h1{
+    font-size: 25px;
+    color: #001e4d;
+    font-weight: 600;
+    border-bottom: 1px solid #333;
+    padding-bottom: 30px;
+}
+.quiz h2{
+    font-size: 22px;
+    color: #0f077e;
+    font-weight: 300;
+    margin-left: 20px;
+}
+
+#opt1,#opt2,#opt3,#opt4{
+    margin-left: 20px;
+    font-size: 18px;
+}
+
+
+
+#next-btn,#close-btn{
+    background: #001e4d;
+    color: #fff;
+    font-weight: 500;
+    width: 140px;
+    border: 0;
+    padding: 10px;
+    margin: 20px auto 0;
+    border-radius: 4px;
+    cursor: pointer;
+}
+#Review-btn{
+    background: #001e4d;
+    color: #fff;
+    font-weight: 500;
+    width: 140px;
+    border: 0;
+    padding: 10px;
+    margin: 20px auto 0;
+    border-radius: 4px;
+    cursor: pointer;
+}
+#onxt-btn{
+    background: #001e4d;
+    color: #fff;
+    font-weight: 500;
+    width: 140px;
+    border: 0;
+    padding: 10px;
+    margin: 20px auto 0;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+#res-status1,#res-status2{
+    background: #c29d26;
+    color: #fff;
+    font-weight: 500;
+    width: 300px;
+    border: 0;
+    padding: 10px;
+    margin: 20px auto 0;
+    border-radius: 4px;
+    cursor: pointer;
+    display: none;
+}
+
+#hintTextArea{
+    width: 300px;
+    height: 100px;
+    padding: 10px;
+    font-family: Arial;
+    font-size: 14px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+    display: none;
+}
+
+#download-pdf{
+    background: #001e4d;
+    color: #fff;
+    font-weight: 500;
+    width: 250px;
+    border: 0;
+    padding: 10px;
+    margin: 20px auto 0;
+    border-radius: 4px;
+    cursor: pointer;
+    display: none;
+}
+
+#change-lang{
+    background: #001e4d;
+    color: #fff;
+    font-weight: 500;
+    width: 70px;
+    border: 0;
+    padding: 10px;
+    margin: 20px  0 0 100px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+
+#ans-btn,#anxt-btn,#submit-btn{
+    background: #001e4d;
+    color: #fff;
+    font-weight: 500;
+    width: 250px;
+    border: 0;
+    padding: 10px;
+    margin: 20px auto 0;
+    border-radius: 4px;
+    cursor: pointer;
+    display: none;
+}
+.btn{
+    background: #fff;
+    color: #222;
+    font-weight: 500;
+    width: 40px;
+    border: 1px solid #222;
+    padding: 10px;
+    margin: 10px 0;
+    text-align: center;
+    border-radius: 4px;
+   
+
+}
+.btn:hover:not([disabled]){
+    background: #222;
+    color: #fff;
+}
+
+.btn:disabled{
+    cursor: no-drop;
+}
+
+
+
+
+
+
+
+
+
+

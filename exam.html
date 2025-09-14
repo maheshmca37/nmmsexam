@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>ONLINE EXAM</title>
+        <link rel="stylesheet" href="exam.css">
+        
+        
+        <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
+
+        
+         <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
+         <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
+
+         <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    </head>
+
+
+<body>  
+    <div class="container">
+        <div class = "exam" id="exam">
+            <div id="timer">00:00:00 </div>
+            
+            <button id="res-status1" type="button">RES1</button>
+            <button id="res-status2" type="button">RES2</button>
+            <button id="download-pdf">Download PDF</button>
+            <br> <button id="change-lang">TELUGU</button> <br>
+            <img id="qimg">
+            <h2 id="question"> Question Start 1.2..3...</h2> <br> 
+
+            <form  action="" id="radio-btns">
+                 <input type="radio" id="opt1" name="option"  value="option1"/> 
+                 <label for="opt1">OPTION A</label> <br> <br> 
+
+                 <input type="radio" id="opt2" name="option"  value="option2"/> 
+                 <label for="opt2">OPTION B</label> <br> <br> 
+
+                 <input type="radio" id="opt3" name="option"  value="option3"/> 
+                 <label for="opt3">OPTION C</label> <br> <br> 
+
+                 <input type="radio" id="opt4" name="option"  value="option4"/> 
+                 <label for="opt4">OPTION D</label> <br> <br> 
+            </form>
+            
+            <button id="next-btn">sNext</button>
+            <button id="Review-btn">Review</button>
+            <button id="onxt-btn">Next</button>
+            <button id="close-btn">SUBMIT</button>
+            <button id="submit-btn"  type="button">EXAM ANALYSIS</button>
+            <button id="ans-btn" type="button">CORRECT ANSWER</button>
+            <button id="anxt-btn" type="button">NEXT</button> <br> <br>
+            <textarea id="hintTextArea" rows="4" cols="50"></textarea>
+        </div>
+
+        <div class="allbtns" id="allbtns">
+          <h1>  ALL QUESTIONS</h1>
+          <form action="" id="optn-btns"> <br> <br>  
+     </form>
+     </div>
+    </div>
+</body>
+
+<script src="exam.js"  defer></script>
+</html>

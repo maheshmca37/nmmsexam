@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Login Form</title>
+<link rel="stylesheet" href="user.css">
+
+</head>
+<body>
+<div class="login-container">
+  <h2>Login Form</h2>
+  <form id="loginForm">
+    <div>
+      <p>Click to Read the <span class="underline" onclick="displayText()">instructions</span> :</p>
+    
+    </div>
+    
+    <input type="tel" id="phone" name="phone" pattern="[0-9]{10}" maxlength="10" placeholder="Phone Number" required>
+    
+
+    <input type="text" id="username" name="username" placeholder="Username" required><br>
+    <input type="password" id="password" name="password" placeholder="Password" required><br>
+    <input type="submit" value="Login">
+
+
+    
+    <script>
+      // Save username to localStorage
+      document.getElementById('username').addEventListener('change', function() {
+          localStorage.setItem('stdntname', this.value);
+      });
+
+       // Save username to localStorage
+       document.getElementById('phone').addEventListener('change', function() {
+          localStorage.setItem('phoneno', this.value);
+      });
+  </script>
+
+  </form>
+</div>
+
+
+<script src="user.js"></script>
+
+</body>
+</html>

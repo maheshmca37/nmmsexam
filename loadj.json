@@ -1,0 +1,113 @@
+
+[
+  {
+    "qid": "1",
+    "qname": "FIND THE LARGEST:",
+    "qopt1": "3/2",
+    "qopt2": "5/2",
+    "qopt3": "1.8",
+    "qopt4": "2.51",
+    "qans": "4",
+    "qhint": "NA",
+    "imgid": "0"
+  },
+  {
+    "qid": "2",
+    "qname": "2, 5, 10, 17, _(Find Next No.)",
+    "qopt1": "28",
+    "qopt2": "26",
+    "qopt3": "25",
+    "qopt4": "27",
+    "qans": "2",
+    "qhint": "NA",
+    "imgid": "0"
+  },
+  {
+    "qid": "3",
+    "qname": "WHAT IS LONGEST RIVER IN THE WORLD",
+    "qopt1": "THAMES",
+    "qopt2": "NILE",
+    "qopt3": "AMAZON",
+    "qopt4": "GANGA",
+    "qans": "2",
+    "qhint": "NA",
+    "imgid": "0"
+  },
+  {
+    "qid": "4",
+    "qname": "WHAT IS THE LARGEST RIVER IN THE WORLD",
+    "qopt1": "THAMES",
+    "qopt2": "NILE",
+    "qopt3": "AMAZON",
+    "qopt4": "GANGA",
+    "qans": "3",
+    "qhint": "NA",
+    "imgid": "0"
+  },
+  {
+    "qid": "5",
+    "qname": "WHAT IS THE CAPITAL CITY OF ITALY?",
+    "qopt1": "BEIJING",
+    "qopt2": "RUSSAI",
+    "qopt3": "ROME",
+    "qopt4": "MASCO",
+    "qans": "3",
+    "qhint": "NA",
+    "imgid": "0"
+  },
+  {
+    "qid": "6",
+    "qname": "FIND THE MISSING NUMBER IN THE SERIES 2, 3, 5 ,7, _ ,13",
+    "qopt1": "9",
+    "qopt2": "10",
+    "qopt3": "15",
+    "qopt4": "11",
+    "qans": "4",
+    "qhint": "NA",
+    "imgid": "0"
+  },
+  {
+    "qid": "7",
+    "qname": "FIND THE SMALLEST",
+    "qopt1": "0.0007",
+    "qopt2": "0.017",
+    "qopt3": "0.006",
+    "qopt4": "0.0001",
+    "qans": "4",
+    "qhint": "NA",
+    "imgid": "0"
+  },
+  {
+    "qid": "8",
+    "qname": "SUN IS A _",
+    "qopt1": "STAR",
+    "qopt2": "PLANET",
+    "qopt3": "LIGHT PLANET",
+    "qopt4": "SATILITE",
+    "qans": "1",
+    "qhint": "NA",
+    "imgid": "0"
+  },
+  {
+    "qid": "9",
+    "qname": "CORBON MONAXIDE FORMULA",
+    "qopt1": "CO2",
+    "qopt2": "CO",
+    "qopt3": "H2O",
+    "qopt4": "CM2",
+    "qans": "2",
+    "qhint": "NA",
+    "imgid": "0"
+  },
+  {
+    "qid": "10",
+    "qname": "LARGEST RIVER IN INDIA",
+    "qopt1": "GODAVARI",
+    "qopt2": "KRISHNA",
+    "qopt3": "BRAHMAPUTRA",
+    "qopt4": "GANGA",
+    "qans": "4",
+    "qhint": "NA",
+    "imgid": "0"
+  }
+]
