@@ -1,0 +1,274 @@
+body{
+    margin:0;
+    padding:0;
+    background:#121212;
+    font-family:Arial;
+    color:white;
+    text-align:center;
+}
+
+h1{
+    color:#ffd700;
+    margin-top:15px;
+}
+
+h2{
+    color:#00e1ff;
+}
+
+h3{
+    color:#00ff99;
+}
+
+.mainContainer{
+    width:100%;
+    margin-top:20px;
+}
+.gameRow{
+    width:100%;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    gap:40px;
+    margin-top:30px;
+    flex-wrap:wrap;
+}
+
+/* VIDEO AREA */
+.girlBox{
+
+    width:240px;
+    height:340px;
+
+    position:relative;
+
+    display:flex;
+    justify-content:center;
+    align-items:center;
+
+    overflow:hidden;
+
+    border-radius:15px;
+
+    background:#000;
+
+}
+
+.cardBox{
+    width:140px;
+    height:220px;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+}
+
+.betArea{
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+}
+
+.betArea .buttonsArea{
+    margin-top:10px;
+}
+
+.girlArea{
+    position:relative;
+    width:320px;
+    height:340px;
+    margin:auto;
+}
+
+/* VIDEO STYLE */
+#girlVideo{
+
+    width:100%;
+    height:100%;
+
+    object-fit:cover;
+
+    border-radius:15px;
+
+}
+
+.card{
+    width:120px;
+    height:170px;
+    background:white;
+    border-radius:10px;
+    border:4px solid black;
+    overflow:hidden;
+    position:relative;
+}
+
+#deckImg{
+    width:100%;
+    height:100%;
+}
+
+#cardNumber{
+    position:absolute;
+    top:50%;
+    left:50%;
+    transform:translate(-50%,-50%);
+    font-size:60px;
+    color:red;
+    font-weight:bold;
+    display:none;
+}
+
+.showNumber{
+    display:block !important;
+}
+
+.pickAnim{
+    animation:pickCard 3s ease;
+}
+
+@keyframes pickCard{
+
+    0%{
+        transform:translateX(-50%) scale(0.5);
+        opacity:0;
+    }
+
+    50%{
+        transform:translateX(-50%) scale(1.1);
+        opacity:1;
+    }
+
+    100%{
+        transform:translateX(-50%) scale(1);
+        opacity:1;
+    }
+
+}
+
+.buttonsArea{
+    margin-top:20px;
+}
+
+button{
+    padding:15px 25px;
+    margin:10px;
+    font-size:22px;
+    border:none;
+    border-radius:10px;
+    cursor:pointer;
+    font-weight:bold;
+}
+
+.minBtn{
+    background:#00aaff;
+    color:white;
+}
+
+.maxBtn{
+    background:#ff5500;
+    color:white;
+}
+
+.chipBtn{
+    background:#444;
+    color:white;
+}
+
+.challengeBtn{
+    background:#ffd700;
+    color:black;
+}
+
+.selectedChip{
+    background:#00cc66 !important;
+}
+
+.selectedChoice{
+    border:4px solid yellow !important;
+    transform:scale(1.1);
+}
+
+#timer{
+    margin-top:15px;
+    font-size:28px;
+    color:#ffcc00;
+}
+
+#message{
+    margin-top:15px;
+    font-size:24px;
+    color:#00ffcc;
+}
+
+.girlBox{
+    width:240px;
+    height:340px;
+    position:relative;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+}
+
+.girl{
+    width:220px;
+    border-radius:15px;
+    transition:all 0.5s ease;
+}
+
+/* SMILE EFFECT */
+.girlSmile{
+    transform:scale(1.02);
+    filter:brightness(1.1);
+}
+
+/* PICKING EFFECT */
+.girlPicking{
+    transform:translateX(15px) rotate(2deg);
+}
+
+/* MOVING CARD */
+.pickCardAnim{
+    position:absolute;
+    right:10px;
+    top:120px;
+    font-size:70px;
+    opacity:0;
+}
+
+/* CARD PICK ANIMATION */
+.animatePick{
+
+    animation:pickMove 3s ease;
+
+}
+
+@keyframes pickMove{
+
+    0%{
+        transform:translate(0px,0px)
+                   rotate(0deg)
+                   scale(0.5);
+
+        opacity:0;
+    }
+
+    30%{
+        opacity:1;
+    }
+
+    50%{
+        transform:translate(-50px,-30px)
+                   rotate(-15deg)
+                   scale(1.1);
+
+        opacity:1;
+    }
+
+    100%{
+        transform:translate(30px,-80px)
+                   rotate(10deg)
+                   scale(1);
+
+        opacity:0;
+    }
+
+}

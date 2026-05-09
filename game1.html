@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>MIN MAX 6 GAME</title>
+
+    <link rel="stylesheet" href="game1.css">
+</head>
+
+<body>
+
+    <h1>MIN MAX 6 CARD GAME</h1>
+
+    <h2 id="lastResults">
+        Last Results : 5 , 8 , 3
+    </h2>
+
+    <h3 id="balText">
+        Balance Chips : 5000
+    </h3>
+
+    <div class="mainContainer">
+
+       <div class="gameRow">
+
+    <div class="girlBox">
+
+    <!-- GIRL -->
+    <video id="girlVideo"
+       autoplay
+       muted
+       playsinline>
+       
+    <source src="girlv.mp4"
+            type="video/mp4">
+
+    </video>
+
+    <!-- MOVING CARD -->
+    <div class="pickCardAnim"
+         id="pickCardAnim">
+
+        🂠
+
+    </div>
+
+</div>
+
+
+    <!-- CARD -->
+    <div class="cardBox">
+
+        <div class="card" id="gameCard">
+
+            <img id="deckImg"
+            src="card.jpg">
+
+            <div id="cardNumber">5</div>
+
+        </div>
+
+    </div>
+
+
+    <!-- BET AREA -->
+    <div class="betArea">
+
+
+        <!-- MIN MAX -->
+      <div class="buttonsArea">
+
+    <button class="minBtn"
+            id="minBtn">
+
+        MIN6
+
+    </button>
+
+    <button class="maxBtn"
+            id="maxBtn">
+
+        MAX6
+
+    </button>
+
+      </div>
+
+        <!-- CHIP BUTTONS -->
+        <div class="buttonsArea">
+
+            <button class="chipBtn">100</button>
+
+            <button class="chipBtn">200</button>
+
+            <button class="chipBtn">500</button>
+
+            <button class="chipBtn">1000</button>
+
+        </div>
+
+        <!-- CHALLENGE BUTTON -->
+        <div class="buttonsArea">
+
+            <button class="challengeBtn"
+                    id="challengeBtn">
+
+                CHALLENGE
+
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+        <!-- TIMER -->
+        <div id="timer">
+            Waiting...
+        </div>
+
+        <!-- MESSAGE -->
+        <div id="message"></div>
+
+    </div>
+
+    <script src="game1.js"></script>
+
+</body>
+</html>

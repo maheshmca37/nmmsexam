@@ -1,47 +1,69 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Login Form</title>
-<link rel="stylesheet" href="user.css">
-
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wonder Games</title>
+    <link rel="stylesheet" href="style.css">
 </head>
+
+<script>
+
+window.onload = function() {
+
+    let user = sessionStorage.getItem("loggedUser");
+
+    let loginButton = document.getElementById("loginBtn");
+
+    if(user != null) {
+
+        loginButton.innerHTML = user;
+
+    }
+    else {
+
+        loginButton.innerHTML = "Login";
+
+    }
+
+}
+
+</script>
+
 <body>
-<div class="login-container">
-  <h2>Login Form</h2>
-  <form id="loginForm">
-    <div>
-      <p>Click to Read the <span class="underline" onclick="displayText()">instructions</span> :</p>
-    
+
+    <!-- Top Right Buttons -->
+    <div class="top-buttons">
+        <button id="loginBtn" onclick="location.href='login.html'">
+    Login
+</button>
+        <button onclick="location.href='signup.html'">Sign Up</button>
+        <button onclick="location.href='account.html'">Account</button>
+    </div>
+
+    <!-- Headings -->
+    <div class="headings">
+        <h1>Welcome to Wonder Games</h1>
+        <h2>Play Fun Online Games</h2>
+        <h3>Enjoy and Challenge Yourself</h3>
+    </div>
+
+    <!-- Game Buttons -->
+    <div class="games-container">
+
+        <button onclick="location.href='game1.html'">Game 1</button>
+        <button onclick="location.href='game2.html'">Game 2</button>
+        <button onclick="location.href='game3.html'">Game 3</button>
+        <button onclick="location.href='game4.html'">Game 4</button>
+        <button onclick="location.href='game5.html'">Game 5</button>
+        <button onclick="location.href='game6.html'">Game 6</button>
+        <button onclick="location.href='game7.html'">Game 7</button>
+        <button onclick="location.href='game8.html'">Game 8</button>
+        <button onclick="location.href='game9.html'">Game 9</button>
+        <button onclick="location.href='game10.html'">Game 10</button>
+
     </div>
     
-    <input type="tel" id="phone" name="phone" pattern="[0-9]{10}" maxlength="10" placeholder="Phone Number" required>
-    
-
-    <input type="text" id="username" name="username" placeholder="Username" required><br>
-    <input type="password" id="password" name="password" placeholder="Password" required><br>
-    <input type="submit" value="Login">
-
-
-    
-    <script>
-      // Save username to localStorage
-      document.getElementById('username').addEventListener('change', function() {
-          localStorage.setItem('stdntname', this.value);
-      });
-
-       // Save username to localStorage
-       document.getElementById('phone').addEventListener('change', function() {
-          localStorage.setItem('phoneno', this.value);
-      });
-  </script>
-
-  </form>
-</div>
-
-
-<script src="user.js"></script>
-
 </body>
+
 </html>

@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div class="login-box">
+
+        <h1>Login</h1>
+
+        <input type="text" id="username" placeholder="Enter Username">
+        <br><br>
+
+        <input type="password" id="password" placeholder="Enter Password">
+        <br><br>
+
+        <button onclick="loginUser()">Submit</button>
+
+        <br><br>
+
+        <button onclick="location.href='index.html'">
+            Back To Home
+        </button>
+
+    </div>
+
+<script>
+
+function loginUser() {
+
+    let uname = document.getElementById("username").value;
+    let pwd = document.getElementById("password").value;
+
+    // Fixed Username & Password
+    if(uname === "mahesh" && pwd === "WonderGame#45") {
+
+        sessionStorage.setItem("loggedUser", uname);
+
+        alert("Login Successful!");
+
+        window.location.href = "wondergames.html";
+
+    } 
+    else {
+
+        alert("Wrong Username or Password");
+
+    }
+}
+
+</script>
+
+</body>
+</html>
