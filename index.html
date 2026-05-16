@@ -17,7 +17,7 @@ window.onload = function() {
 
     if(user != null) {
 
-        loginButton.innerHTML = user;
+        loginButton.innerHTML = 'User: '+ sessionStorage.getItem("loggedUser") +'<br>'+'Bal: '+sessionStorage.getItem("AccountBalance");
 
     }
     else {

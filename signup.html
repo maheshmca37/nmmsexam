@@ -1,18 +1,428 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <title>Sign Up</title>
-    <link rel="stylesheet" href="style.css">
+
+    <!-- Icons -->
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <!-- Supabase -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background: #f0f2f5;
+            font-family: Arial, Helvetica, sans-serif;
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            height: 100vh;
+        }
+
+        .signupBox {
+            width: 90%;
+            max-width: 400px;
+
+            background: white;
+
+            padding: 25px;
+
+            border-radius: 15px;
+
+            box-shadow: 0px 0px 15px rgba(0,0,0,0.2);
+
+            text-align: center;
+        }
+
+        h1 {
+            margin-bottom: 25px;
+            color: #333;
+        }
+
+        .inputBox {
+            position: relative;
+            margin-bottom: 20px;
+        }
+
+        .inputBox i {
+            position: absolute;
+            left: 12px;
+            top: 14px;
+            color: gray;
+        }
+
+        .inputBox input {
+            width: 100%;
+            padding: 12px 12px 12px 40px;
+
+            border-radius: 10px;
+            border: 1px solid #ccc;
+
+            font-size: 16px;
+            box-sizing: border-box;
+        }
+
+        .inputBox input:focus {
+            outline: none;
+            border: 1px solid #007bff;
+        }
+
+        .infoText {
+            font-size: 12px;
+            color: gray;
+            margin-top: -12px;
+            margin-bottom: 15px;
+            text-align: left;
+        }
+
+        .submitBtn {
+            width: 100%;
+            padding: 12px;
+
+            border: none;
+            border-radius: 10px;
+
+            background: #007bff;
+            color: white;
+
+            font-size: 17px;
+            cursor: pointer;
+        }
+
+        .submitBtn:hover {
+            background: #0056b3;
+        }
+
+        .backBtn {
+            margin-top: 15px;
+
+            width: 100%;
+            padding: 12px;
+
+            border: none;
+            border-radius: 10px;
+
+            background: #555;
+            color: white;
+
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        .backBtn:hover {
+            background: #333;
+        }
+
+        #message {
+            margin-top: 15px;
+            font-weight: bold;
+        }
+    </style>
 </head>
+
 <body>
 
-    <h1>Login Page</h1>
+    <div class="signupBox">
 
-    <button onclick="location.href='index.html'">
-        Back To Home
-    </button>
+        <h1>
+            <i class="fa-solid fa-user-plus"></i>
+            Sign Up
+        </h1>
+
+        <!-- USERNAME -->
+        <div class="inputBox">
+            <i class="fa-solid fa-user"></i>
+
+            <input type="text"
+                id="username"
+                placeholder="Enter Username">
+        </div>
+
+        <!-- PASSWORD -->
+        <div class="inputBox">
+            <i class="fa-solid fa-lock"></i>
+
+            <input type="password"
+                id="password"
+                placeholder="Enter Password">
+        </div>
+
+        <!-- PHONE -->
+        <div class="inputBox">
+            <i class="fa-solid fa-phone"></i>
+
+            <input type="text"
+                id="phoneno"
+                placeholder="Enter WhatsApp Number">
+        </div>
+
+        <div class="infoText">
+            Valid WhatsApp number only. Password will be sent here.
+        </div>
+
+        <!-- MAIL -->
+        <div class="inputBox">
+            <i class="fa-solid fa-envelope"></i>
+
+            <input type="text"
+                id="mail"
+                placeholder="Enter Gmail (Optional)">
+        </div>
+
+        <!-- SUBMIT -->
+        <button class="submitBtn" onclick="signUpUser()">
+            <i class="fa-solid fa-paper-plane"></i>
+            Submit
+        </button>
+
+        <!-- BACK -->
+        <button class="backBtn"
+            onclick="location.href='index.html'">
+
+            <i class="fa-solid fa-house"></i>
+            Back To Home
+        </button>
+
+        <div id="message"></div>
+
+    </div>
+
+    <script>
+
+        // =========================
+        // SUPABASE CONNECTION
+        // =========================
+
+        const supabaseUrl = "https://dbfycihbcosuxxkrmbhl.supabase.co";
+
+        const supabaseKey = "sb_publishable_aOyXtAbzrrX0Z9jPAU1qEA_0ZnK35BX";
+
+        const supabaseClient = supabase.createClient(
+            supabaseUrl,
+            supabaseKey
+        );
+
+
+
+        // =========================
+        // SIGNUP FUNCTION
+        // =========================
+
+        async function signUpUser() {
+
+            let username = document
+                .getElementById("username")
+                .value
+                .trim();
+
+            let password = document
+                .getElementById("password")
+                .value
+                .trim();
+
+            let phoneno = document
+                .getElementById("phoneno")
+                .value
+                .trim();
+
+            let mail = document
+                .getElementById("mail")
+                .value
+                .trim();
+
+            let message = document
+                .getElementById("message");
+
+
+
+            // =========================
+            // USERNAME VALIDATION
+            // =========================
+
+            if (username.length < 5) {
+
+                message.innerHTML =
+                    "Username must be minimum 5 characters";
+
+                message.style.color = "red";
+
+                return;
+            }
+
+            if (username.includes(" ")) {
+
+                message.innerHTML =
+                    "Username should not contain spaces";
+
+                message.style.color = "red";
+
+                return;
+            }
+
+
+
+            // =========================
+            // PASSWORD VALIDATION
+            // =========================
+
+            let passwordPattern =
+                /^(?=.*[0-9])(?=.*[!@#$%^&*])[A-Za-z0-9!@#$%^&*]{5,}$/;
+
+            if (!passwordPattern.test(password)) {
+
+                message.innerHTML =
+                    "Password needs 5 chars, one number & one special symbol";
+
+                message.style.color = "red";
+
+                return;
+            }
+
+
+
+            // =========================
+            // PHONE VALIDATION
+            // =========================
+
+            let phonePattern = /^[0-9]{10}$/;
+
+            if (!phonePattern.test(phoneno)) {
+
+                message.innerHTML =
+                    "Phone number must be exactly 10 digits";
+
+                message.style.color = "red";
+
+                return;
+            }
+
+
+
+            // =========================
+            // MAIL VALIDATION
+            // =========================
+
+            if (mail !== "") {
+
+                if (!mail.endsWith("@gmail.com")) {
+
+                    message.innerHTML =
+                        "Only @gmail.com mails allowed";
+
+                    message.style.color = "red";
+
+                    return;
+                }
+            }
+
+
+
+            // =========================
+            // DUPLICATE PHONE CHECK
+            // =========================
+
+            let { data: existingUsers, error: checkError } =
+                await supabaseClient
+                    .from("NewSignUpUser")
+                    .select("phoneno")
+                    .eq("phoneno", phoneno);
+
+            if (checkError) {
+
+                message.innerHTML =
+                    "Database check failed";
+
+                message.style.color = "red";
+
+                return;
+            }
+
+            if (existingUsers.length > 0) {
+
+                message.innerHTML =
+                    "User already registered. Please login.";
+
+                message.style.color = "red";
+
+                return;
+            }
+
+
+
+            // =========================
+            // INSERT DATA
+            // =========================
+
+            let uid = Math.floor(
+                100000 + Math.random() * 900000
+            );
+
+            let createdDate = new Date()
+                .toLocaleString();
+
+            let { error: insertError } =
+                await supabaseClient
+                    .from("NewSignUpUser")
+                    .insert([
+                        {
+                            uid: uid,
+                            created: createdDate,
+                            username: username,
+                            spassword: password,
+                            phoneno: phoneno,
+                            mail: mail,
+                            alreadyexisted: false
+                        }
+                    ]);
+
+
+
+            // =========================
+            // INSERT RESULT
+            // =========================
+
+            if (insertError) {
+
+                console.log(insertError);
+
+                message.innerHTML =
+                    "Signup failed";
+
+                message.style.color = "red";
+
+                return;
+            }
+
+            message.innerHTML =
+                "Signup successful.Your password will be sent to whatsup number soon!";
+
+            message.style.color = "green";
+
+
+
+            // CLEAR INPUTS
+
+            document.getElementById("username").value = "";
+
+            document.getElementById("password").value = "";
+
+            document.getElementById("phoneno").value = "";
+
+            document.getElementById("mail").value = "";
+
+        }
+
+    </script>
 
 </body>
+
 </html>

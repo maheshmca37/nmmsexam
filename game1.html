@@ -11,6 +11,7 @@
 </head>
 
 <body>
+    <script type="module" src="supabase.js"></script>
 
     <h1>MIN MAX 6 CARD GAME</h1>
 
@@ -19,7 +20,7 @@
     </h2>
 
     <h3 id="balText">
-        Balance Chips : 5000
+        
     </h3>
 
     <div class="mainContainer">
@@ -56,7 +57,7 @@
         <div class="card" id="gameCard">
 
             <img id="deckImg"
-            src="card.JPG">
+            src="card.jpg">
 
             <div id="cardNumber">5</div>
 
@@ -110,6 +111,7 @@
                 CHALLENGE
 
             </button>
+             
 
         </div>
 
@@ -124,9 +126,20 @@
         <!-- MESSAGE -->
         <div id="message"></div>
 
+        <div>
+            <br> <br> <button type="button" class="chipBtn" onclick="homepage()">  Home  </button>
+        </div>
+
     </div>
 
     <script src="game1.js"></script>
 
+    <script>
+        function homepage(){
+        window.location.href='index.html';
+        }
+    </script>
+
 </body>
+
 </html>

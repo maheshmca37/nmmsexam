@@ -1,58 +1,291 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login</title>
-    <link rel="stylesheet" href="style.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Login</title>
+
+<style>
+
+body{
+    margin:0;
+    padding:0;
+    background:#111;
+    font-family:Arial, sans-serif;
+
+    display:flex;
+    justify-content:center;
+    align-items:center;
+
+    height:100vh;
+}
+
+.login-box{
+
+    width:90%;
+    max-width:350px;
+
+    background:#222;
+
+    padding:25px;
+
+    border-radius:12px;
+
+    text-align:center;
+
+    box-shadow:0px 0px 10px rgba(0,0,0,0.5);
+}
+
+h1{
+    color:white;
+    margin-bottom:25px;
+}
+
+.labelText{
+    color:white;
+    font-size:18px;
+    display:block;
+    margin-bottom:8px;
+    text-align:left;
+}
+
+input{
+
+    width:100%;
+    padding:14px;
+
+    font-size:16px;
+
+    border:none;
+    border-radius:8px;
+
+    box-sizing:border-box;
+
+    margin-bottom:20px;
+}
+
+button{
+
+    width:100%;
+    padding:14px;
+
+    font-size:18px;
+
+    border:none;
+    border-radius:8px;
+
+    background:orange;
+
+    cursor:pointer;
+
+    margin-top:10px;
+}
+
+button:hover{
+    opacity:0.9;
+}
+
+</style>
+
 </head>
+
 <body>
 
-    <div class="login-box">
+<div class="login-box">
 
-        <h1>Login</h1>
+    <h1>LOGIN</h1>
 
-        <input type="text" id="username" placeholder="Enter Username">
-        <br><br>
 
-        <input type="password" id="password" placeholder="Enter Password">
-        <br><br>
+    <label class="labelText" id="usrnamelabel">Username</label>
 
-        <button onclick="loginUser()">Submit</button>
+    <input type="text" id="username" placeholder="Enter Username">
 
-        <br><br>
+    <label class="labelText" id="passwordLabel">
+    Password
+   </label>
 
-        <button onclick="location.href='index.html'">
-            Back To Home
-        </button>
+    <input type="password" id="password" placeholder="Enter Password">
+    
 
-    </div>
+    <br>
 
+
+
+<!-- FORGOT PASSWORD SECTION -->
+
+<div id="forgotSection"
+     style="display:none; margin-top:25px;">
+
+    <label class="labelText">Username</label>
+
+    <input type="text"
+           id="forgotUser"
+           placeholder="Enter Username">
+
+    <label class="labelText">Phone Number</label>
+
+    <input type="text"
+           id="forgotPhone"
+           placeholder="Enter WhatsApp Number">
+
+    <button type="button" onclick="sendPassword()">
+        Send Password
+    </button>
+</div>
+
+    <button onclick="loginUser()">
+        Submit
+    </button>
+
+    <button type="button" onclick="homepage()">  Home  </button>
+
+</div>
+
+<!-- SUPABASE -->
+<script type="module" src="supabase.js"></script>
 <script>
 
-function loginUser() {
+window.loginUser = async function() {
 
-    let uname = document.getElementById("username").value;
-    let pwd = document.getElementById("password").value;
+    let uname = document.getElementById("username").value.trim();
+    let pwd   = document.getElementById("password").value.trim();
 
-    // Fixed Username & Password
-    if(uname === "mahesh" && pwd === "WonderGame#45") {
+    if(uname === "" || pwd === "") {
 
-        sessionStorage.setItem("loggedUser", uname);
-
-        alert("Login Successful!");
-
-        window.location.href = "wondergames.html";
-
-    } 
-    else {
-
-        alert("Wrong Username or Password");
-
+        alert("Please enter Username and Password");
+        return;
     }
+
+    // CHECK USER IN DATABASE
+    const { data, error } = await supabase
+        .from("UserDetails")
+        .select("*")
+        .eq("username", uname)
+        .eq("password", pwd)
+        .single();
+
+    if(error || !data){
+
+        alert("Invalid Username or Password");
+
+            // SHOW FORGOT SECTION
+         showForgotSection();
+
+
+        return;
+    }
+
+    // LOGIN SUCCESS
+
+    alert("Login Successful");
+
+    // STORE USER DETAILS
+    sessionStorage.setItem("loggedUser", data.username);
+
+    // GLOBAL USER ID 
+    sessionStorage.setItem("UserID", data.uid);
+
+
+    // GLOBAL ACCOUNT BALANCE
+    sessionStorage.setItem("AccountBalance", data.CBal);
+
+
+
+    // GO TO HOME PAGE
+    window.location.href = "index.html";
 }
+
+// ENTER KEY SUPPORT
+document.addEventListener("keydown", function(event){
+
+    if(event.key === "Enter"){
+        loginUser();
+    }
+
+});
+
 
 </script>
 
+
+
+
 </body>
+
+
+
+
+<script>
+
+
+function homepage(){
+  window.location.href='index.html';
+
+}
+
+
+async function showForgotSection(){
+
+    // SHOW FORGOT SECTION
+    document.getElementById("forgotSection").style.display = "block";
+
+    // COPY USERNAME TO FORGOT FIELD
+    document.getElementById("forgotUser").value =
+    document.getElementById("username").value;
+
+    // DISABLE LOGIN FIELDS
+    document.getElementById("username").style.display = "none";
+     document.getElementById("usrnamelabel").style.display = "none";
+    
+    document.getElementById("password").disabled = true;
+
+    // HIDE PASSWORD FIELD
+    document.getElementById("password").style.display = "none";
+
+    document.getElementById("passwordLabel").style.display = "none";
+
+    // DISABLE LOGIN BUTTON
+    document.querySelector("button[onclick='loginUser()']").disabled = true;
+}
+async function sendPassword(){
+
+    let uname = document.getElementById("forgotUser").value.trim();
+
+    let phone = document.getElementById("forgotPhone").value.trim();
+
+    if(uname === "" || phone === ""){
+
+        alert("Please enter Username and Phone Number");
+        return;
+    }
+
+
+    // CHECK PHONE NUMBER IN DATABASE
+    const { data, error } = await  window.supabase
+    .from("UserDetails")
+    .select("*")
+    .eq("username", uname)
+    .eq("phoneno", phone);
+
+    if(error){
+
+        alert("Database error");
+        return;
+    }
+
+    // PHONE NOT REGISTERED
+    if(data.length === 0){
+
+        alert("This username/phone number not registered with us");
+        return;
+    }
+
+    // PHONE EXISTS
+    alert("Password will be sent to entered phone number soon");
+
+    // continue your send password logic here
+}
+</script>
+
 </html>

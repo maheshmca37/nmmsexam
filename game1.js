@@ -2,7 +2,13 @@
    GLOBAL VARIABLES
 ========================= */
 
-let Mainbalchips = 5000;
+let Mainbalchips =  parseFloat(sessionStorage.getItem("AccountBalance"));
+
+let gameID = 101 ;
+let gameName = "MIN MAX 6"
+
+let rbetAmnt = 0.00 ;
+let rbetStatus = false;
 
 let currentSelected = "";
 
@@ -58,6 +64,14 @@ document.getElementById("pickCardAnim");
 
 const girlVideo =
 document.getElementById("girlVideo");
+
+
+balText.innerHTML =    "Balance : " +    Mainbalchips;
+
+
+
+
+
 
 /* =========================
    SET VALUE FUNCTION
@@ -255,6 +269,8 @@ challengeBtn.addEventListener("click", ()=>{
     }
 
     betConfirmed = true;
+
+
     disableButtons();
 
     message.innerHTML =
@@ -263,7 +279,24 @@ challengeBtn.addEventListener("click", ()=>{
     " | " +
     selectedChip;
 
+
+   updatecurbettoDB(currentSelected,selectedChip);
 });
+
+async function updatecurbettoDB(currentSelected,selectedChip) {
+    
+  let cursel = currentSelected;
+  let selchips = selectedChip;
+  const { data, error } = await supabase
+  .from("game1_betvalue")
+  .insert([
+    {
+      selected: cursel,
+      value: selchips
+    }
+  ]);
+
+}
 
 
 /* =========================
@@ -271,6 +304,7 @@ challengeBtn.addEventListener("click", ()=>{
 ========================= */
 
 function processResult(){
+
 
     if(!betConfirmed){
 
@@ -304,24 +338,78 @@ function processResult(){
 
         Mainbalchips += selectedChip;
 
-        message.innerHTML =
-        "YOU WON +" +
-        selectedChip;
+        rbetStatus = true;
+       
+        message.innerHTML =        "YOU WON +" +   selectedChip;
 
     }
     else{
 
         Mainbalchips -= selectedChip;
 
-        message.innerHTML =
-        "YOU LOST -" +
-        selectedChip;
+        message.innerHTML =        "YOU LOST -" +    selectedChip;
 
     }
+    rbetAmnt = selectedChip;
+    
+    sessionStorage.setItem("AccountBalance", Mainbalchips);
 
-    balText.innerHTML =
-    "Balance Chips : " +
-    Mainbalchips;
+
+    balText.innerHTML =    "Balance : " + sessionStorage.getItem("AccountBalance");;
+    
+     updateUserDetailsToDB();
+     updateUserActivityToDB();
+
+
+}
+
+
+async function updateUserDetailsToDB(){
+    let Mainbalchips1 = parseFloat(sessionStorage.getItem("AccountBalance"));
+    let UserID = sessionStorage.getItem("UserID");
+
+   const { data, error } = await supabase
+  .from("UserDetails")
+  .update({ CBal: Mainbalchips1 })
+  .eq("uid", UserID);
+
+}
+
+async function updateUserActivityToDB(){
+
+  let userid = parseInt(sessionStorage.getItem("UserID"));
+  let usrname = sessionStorage.getItem("loggedUser");
+  let crntBal = parseFloat(sessionStorage.getItem("AccountBalance"));
+  let winamnt = 0.00;
+  let finalbal = 0.00;
+
+  
+if (rbetStatus === true) {
+
+    finalbal = crntBal - rbetAmnt;
+    winamnt = rbetAmnt;
+
+} else {
+
+    finalbal = crntBal + rbetAmnt;
+    winamnt = -rbetAmnt;
+}
+
+const { data, error } = await supabase
+  .from("UserActivity")  
+  .insert([
+    {
+      uid: userid,
+      uname: usrname,
+      plyedgameid: gameID,
+      playedgamename: gameName,
+      CBal: finalbal,
+      betamnt: rbetAmnt,
+      winamnt: winamnt,
+      finalbal: crntBal,
+      datetime : new Date().toISOString()
+    }
+  ]);
 
 }
 
@@ -330,7 +418,7 @@ function processResult(){
    START ROUND
 ========================= */
 
-function startRound(){
+ function startRound(){
 
     betConfirmed = false;
 
@@ -404,13 +492,16 @@ function startRound(){
 
 
             // WAIT 9 SECONDS (VIDEO DURATION)
-            setTimeout(()=>{
+            setTimeout(async()=>{
 
                 card.classList.remove("pickAnim");
 
                 // RANDOM NUMBER 2 TO 10
-                let value =
-                Math.floor(Math.random()*9)+2;
+                //let value =  Math.floor(Math.random()*9)+2;
+
+                
+                let value = await getCurrentRoundValue();
+
 
                 setValue(value);
 
@@ -438,6 +529,16 @@ function startRound(){
     },1000);
 
 }
+
+
+
+async function getCurrentRoundValue(){
+   const { data, error } = await supabase.rpc("sendgame1_curvalue");
+
+   return data;
+
+}
+
 
 
 /* =========================
