@@ -4,8 +4,8 @@
 
 let Mainbalchips =  parseFloat(sessionStorage.getItem("AccountBalance"));
 
-let gameID = 101 ;
-let gameName = "MIN MAX 6"
+let gameID = 102 ;
+let gameName = "HEAD OR TAIL"
 
 let rbetAmnt = 0.00 ;
 let rbetStatus = false;
@@ -18,7 +18,7 @@ let currentCardValue = 5;
 
 let betConfirmed = false;
 
-let resultHistory = [5,8,3];
+let resultHistory = ['T','H','H'];
 
 
 
@@ -105,7 +105,12 @@ function showResultCard(value){
 
     deckImg.style.display = "none";
 
-    cardNumber.innerHTML = value;
+    if (value == 1) { 
+      cardNumber.innerHTML = "H";
+    }
+    else if (value == 2){
+      cardNumber.innerHTML = "T";
+    }
 
     cardNumber.classList.add("showNumber");
 
@@ -118,7 +123,13 @@ function showResultCard(value){
 
 function updateHistory(value){
 
-    resultHistory.unshift(value);
+    if (value == 1 ) {
+     resultHistory.unshift('H') 
+    }
+    else if(value == 2) {
+        resultHistory.unshift('T')
+    }
+    //resultHistory.unshift(value);
 
     if(resultHistory.length > 3){
 
@@ -205,14 +216,14 @@ chipButtons.forEach(btn=>{
 
 minBtn.addEventListener("click", ()=>{
 
-    currentSelected = "MIN6";
+    currentSelected = "HEAD";
 
     minBtn.classList.add("selectedChoice");
 
     maxBtn.classList.remove("selectedChoice");
 
     message.innerHTML =
-    "Selected : MIN6";
+    "Selected : HEAD";
 
 });
 
@@ -223,14 +234,13 @@ minBtn.addEventListener("click", ()=>{
 
 maxBtn.addEventListener("click", ()=>{
 
-    currentSelected = "MAX6";
+    currentSelected = "TAIL";
 
     maxBtn.classList.add("selectedChoice");
 
     minBtn.classList.remove("selectedChoice");
 
-    message.innerHTML =
-    "Selected : MAX6";
+    message.innerHTML =   "Selected : TAIL";
 
 });
 
@@ -253,7 +263,7 @@ challengeBtn.addEventListener("click", ()=>{
     if(currentSelected == ""){
 
         message.innerHTML =
-        "Select MIN6 or MAX6";
+        "Select HEAD OR TAIL";
 
         return;
 
@@ -273,9 +283,7 @@ challengeBtn.addEventListener("click", ()=>{
 
     disableButtons();
 
-    message.innerHTML =
-    "Bet Confirmed : " +
-    currentSelected +
+    message.innerHTML =    "Bet Confirmed : " +    currentSelected +
     " | " +
     selectedChip;
 
@@ -287,7 +295,7 @@ async function updatecurbettoDB(currentSelected,selectedChip) {
   let cursel = currentSelected;
   let selchips = selectedChip;
   const { data, error } = await supabase
-  .from("game1_betvalue")
+  .from("game2_betvalue")
   .insert([
     {
       selected: cursel,
@@ -313,15 +321,15 @@ function processResult(){
 
     let won = false;
 
-    if(currentSelected == "MIN6" &&
-       currentCardValue < 6){
+    if(currentSelected == "HEAD" &&
+       currentCardValue == 1 ){
 
         won = true;
 
     }
 
-    if(currentSelected == "MAX6" &&
-       currentCardValue > 6){
+    if(currentSelected == "TAIL" &&
+       currentCardValue == 2){
 
         won = true;
 
@@ -420,8 +428,8 @@ const { data, error } = await supabase
 
 
 
-async function getCurrentRoundValue(){
-   const { data, error } = await supabase.rpc("sendgame1_curvalue");
+async function getCurrentRoundValue_game2(){
+   const { data, error } = await supabase.rpc("sendgame2_curvalue");
 
    return data;
 
@@ -511,7 +519,7 @@ function videoState(){
     disableButtons();
 
     timerText.innerHTML =
-    "Picking Card...";
+    "Tossing COIN...";
 
     if(!videoStarted){
 
@@ -624,7 +632,7 @@ function handleGameState(elapsed,data){
 async function syncRound(){
 
     const { data, error } = await supabase
-    .from("game1_CurrentRound")
+    .from("game2_CurrentRound")
     .select("*")
     .eq("id",1)
     .single();

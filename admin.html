@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+<title>Round Controller</title>
+</head>
+
+<body>
+
+<h1>Game1 [ MIN6  MAX6 ] Round Controller Running...</h1>
+
+<h1>Game2 [ HEAD OR TAIL ] Round Controller Running...</h1>
+
+<script type="module">
+
+import { createClient }
+from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm'
+
+ const supabaseUrl = "https://dbfycihbcosuxxkrmbhl.supabase.co";
+ const supabaseKey = "sb_publishable_aOyXtAbzrrX0Z9jPAU1qEA_0ZnK35BX";
+
+
+const supabase =
+createClient(supabaseUrl,supabaseKey);
+
+//game1 code  
+
+async function getCurrentRoundValue(){
+
+   const { data, error }
+
+   = await supabase
+
+   .rpc("sendgame1_curvalue");
+
+   if(error){
+
+      console.log(error);
+
+      return 5;
+   }
+
+   return data;
+}
+
+let isRunning = false;
+
+async function startNewRound_game1(){
+
+    try{
+
+        if(isRunning) return;
+
+        isRunning = true;
+
+        // GET CURRENT ROUND NUMBER
+        const {
+            data: roundData
+        }
+
+        = await supabase
+
+        .from("game1_CurrentRound")
+
+        .select("round_no")
+
+        .eq("id",1)
+
+        .single();
+
+
+        let nextRound =
+        roundData.round_no + 1;
+
+
+        // START ROUND
+        await supabase
+
+        .from("game1_CurrentRound")
+
+        .update({
+
+            round_no: nextRound,
+
+            start_time:
+            new Date().toISOString(),
+
+            result_value: null
+
+        })
+
+        .eq("id",1);
+
+
+        console.log(
+            "GAME1 ROUND STARTED",
+            nextRound
+        );
+
+
+        // WAIT 27 SEC
+        await new Promise(resolve =>
+            setTimeout(resolve,27000)
+        );
+
+
+        // GENERATE RESULT
+        let value = await getCurrentRoundValue();
+
+
+        await supabase
+
+        .from("game1_CurrentRound")
+
+        .update({
+
+            result_value: value
+
+        })
+
+        .eq("id",1);
+
+
+        console.log(
+            "GAME1 RESULT : ",
+            value
+        );
+
+    }
+
+    catch(err){
+
+        console.log(err);
+
+    }
+
+    finally{
+
+        isRunning = false;
+
+        // NEXT ROUND AFTER 3 SEC
+        setTimeout(()=>{
+
+            startNewRound_game1();
+
+        },3000);
+
+    }
+}
+
+startNewRound_game1();
+
+
+// game2 code
+
+
+async function getCurrentRoundValue_game2(){
+
+   const { data, error }
+
+   = await supabase
+
+   .rpc("sendgame2_curvalue");
+
+   if(error){
+
+      console.log(error);
+
+      return 5;
+   }
+
+   return data;
+}
+
+let isRunning_game2 = false;
+
+async function startNewRound_game2(){
+
+    try{
+
+        if(isRunning_game2) return;
+
+        isRunning_game2 = true;
+
+        // GET CURRENT ROUND NUMBER
+        const {
+            data: roundData
+        }
+
+        = await supabase
+
+        .from("game2_CurrentRound")
+
+        .select("round_no")
+
+        .eq("id",1)
+
+        .single();
+
+
+        let nextRound =
+        roundData.round_no + 1;
+
+
+        // START ROUND
+        await supabase
+
+        .from("game2_CurrentRound")
+
+        .update({
+
+            round_no: nextRound,
+
+            start_time:
+            new Date().toISOString(),
+
+            result_value: null
+
+        })
+
+        .eq("id",1);
+
+
+        console.log(
+            "GAME2 ROUND STARTED",
+            nextRound
+        );
+
+
+        // WAIT 27 SEC
+        await new Promise(resolve =>
+            setTimeout(resolve,27000)
+        );
+
+
+        // GENERATE RESULT
+        let value2 = await getCurrentRoundValue_game2();
+
+
+        await supabase
+
+        .from("game2_CurrentRound")
+
+        .update({
+
+            result_value: value2
+
+        })
+
+        .eq("id",1);
+
+
+        console.log(
+            "GAME2 RESULT : ",
+            value2
+        );
+
+    }
+
+    catch(err){
+
+        console.log(err);
+
+    }
+
+    finally{
+
+        isRunning_game2 = false;
+
+        // NEXT ROUND AFTER 3 SEC
+        setTimeout(()=>{
+
+            startNewRound_game2();
+
+        },3000);
+
+    }
+}
+
+startNewRound_game2();
+
+
+</script>
+
+</body>
+</html>
