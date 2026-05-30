@@ -580,8 +580,7 @@ function waitState(){
 
     disableButtons();
 
-    timerText.innerHTML =
-    "Next Round Starting...";
+   // timerText.innerHTML =    "Next Round Starting...";
 }
 
 

@@ -572,14 +572,14 @@ function waitState(){
 
     disableButtons();
 
-    timerText.innerHTML =
-    "Next Round Starting...";
+   // timerText.innerHTML =    "Next Round Starting...";
 }
 
 
 /* =========================
    HANDLE GAME STATE
 ========================= */
+
 
 function handleGameState(elapsed,data){
 
@@ -589,6 +589,14 @@ function handleGameState(elapsed,data){
         lastRoundNo = data.round_no;
 
         resetRound();
+    }
+
+    // RESULT AVAILABLE
+    if(data.result_value !== null){
+
+        resultState(data.result_value);
+
+        return;
     }
 
     // BETTING
@@ -601,12 +609,6 @@ function handleGameState(elapsed,data){
     else if(elapsed >= 18 && elapsed < 27){
 
         videoState();
-    }
-
-    // RESULT
-    else if(elapsed >= 27 && elapsed < 30){
-
-        resultState(data.result_value);
     }
 
     // WAIT
