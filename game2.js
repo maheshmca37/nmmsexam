@@ -599,6 +599,14 @@ function handleGameState(elapsed,data){
         resetRound();
     }
 
+    // RESULT AVAILABLE
+    if(data.result_value !== null){
+
+        resultState(data.result_value);
+
+        return;
+    }
+
     // BETTING
     if(elapsed >= 0 && elapsed < 18){
 
@@ -611,19 +619,12 @@ function handleGameState(elapsed,data){
         videoState();
     }
 
-    // RESULT
-    else if(elapsed >= 27 && elapsed < 30){
-
-        resultState(data.result_value);
-    }
-
     // WAIT
     else{
 
         waitState();
     }
 }
-
 
 /* =========================
    SYNC ROUND
