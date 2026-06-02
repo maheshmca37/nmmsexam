@@ -616,18 +616,26 @@ async function loadGameHistory() {
         return;
     }
 
-    data.forEach(row => {
+   data.forEach(row => {
 
-        body.innerHTML += `
-        <tr>
-            <td>${row.playedgamename ?? ''}</td>
-            <td>${row.CBal ?? ''}</td>
-            <td>${row.betamnt ?? ''}</td>
-            <td>${row.winamnt ?? ''}</td>
-            <td>${row.finalbal ?? ''}</td>
-           <td>${row.datetime ? row.datetime.substring(0, 19).replace('T', ' ') : ''}</td>
-        </tr>`;
-    });
+    const displayDate = row.datetime
+        ? new Date(row.datetime + "Z")
+            .toLocaleString("sv-SE", {
+                timeZone: "Asia/Kolkata"
+            })
+            .replace(",", "")
+        : '';
+
+    body.innerHTML += `
+    <tr>
+        <td>${row.playedgamename ?? ''}</td>
+        <td>${row.CBal ?? ''}</td>
+        <td>${row.betamnt ?? ''}</td>
+        <td>${row.winamnt ?? ''}</td>
+        <td>${row.finalbal ?? ''}</td>
+        <td>${displayDate}</td>
+    </tr>`;
+});
 }
 
 /* ===========================
