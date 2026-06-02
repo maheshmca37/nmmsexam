@@ -415,8 +415,7 @@ const { data, error } = await supabase
       CBal: finalbal1,
       betamnt: rbetAmnt,
       winamnt: winamnt,
-      finalbal: crntBal,
-      datetime : new Date().toISOString()
+      finalbal: crntBal
     }
   ]);
 }
