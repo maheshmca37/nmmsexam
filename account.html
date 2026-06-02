@@ -1,18 +1,314 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Account Details</title>
-    <link rel="stylesheet" href="style.css">
+    <title>Account</title>
+
+    <link rel="stylesheet" href="account.css">
 </head>
+
 <body>
 
-    <h1>Login Page</h1>
+    <div class="container">
 
-    <button onclick="location.href='index.html'">
-        Back To Home
-    </button>
+        <h2>My Account</h2>
+
+        <div class="menu-buttons">
+
+            <button id="btnDeposit">Deposit</button>
+            <button id="btnWithdraw">Withdraw</button>
+            <button id="btnGameHistory">Game History</button>
+            <button id="btnStatement">AC Statement</button>
+            <button id="btnResetpwrd">Reset Password</button>
+            <button id="btnHome">Home</button>
+
+        </div>
+
+        <!-- ================= DEPOSIT ================= -->
+
+        <div id="depositBox" class="sectionBox">
+
+            <h3>Deposit Amount</h3>
+
+            <label>Enter Amount & Payment Mode</label>
+            <input type="number"
+                   id="depositAmount"
+                   min="100"
+                   max="20000"
+                   step="1"
+                   placeholder="Min 100 Max 20000">
+
+            <div class="radioGroup">
+
+                <label>
+                    <input type="radio"
+                           name="depositType"
+                           value="QR"
+                           checked>
+                    QR Code(100 to 2000)
+                </label>
+
+                <label>
+                    <input type="radio"
+                           name="depositType"
+                           value="BANK">
+                    Bank
+                </label>
+
+            </div>
+
+            <!-- QR BOX -->
+
+            <div id="qrBox" class="infoBox">
+
+                <img src="qr.JPG"
+                     alt="QR Code"
+                     class="qrImage">
+
+            </div>
+
+            <!-- BANK BOX -->
+
+            <div id="bankBox" class="infoBox">
+
+                <div class="detailRow">
+                    <span>AC Number :</span>
+                    <span id="senderAcNo"></span>
+                </div>
+
+                <div class="detailRow">
+                    <span>IFSC :</span>
+                    <span id="senderIfsc"></span>
+                </div>
+
+                <div class="detailRow">
+                    <span>Bank :</span>
+                    <span id="senderBank"></span>
+                </div>
+
+                <div class="detailRow">
+                    <span>Name :</span>
+                    <span id="senderName"></span>
+                </div>
+
+            </div>
+
+            <button id="depositValidateBtn">
+                SUBMIT
+            </button>
+
+            <p id="depositMsg" class="message"></p>
+
+            <!-- CONFIRM BOX -->
+
+            <div id="depositConfirmBox">
+
+                <h3>Enter Paid Payment Details</h3>
+
+                <label>Transaction ID</label>
+                <input type="text"
+                       id="transactionId"
+                       maxlength="15"
+                       placeholder="Transaction ID of Payment Reciept">
+
+                <label>Upload Payment Screenshot</label>
+                <input type="file"
+                       id="screenshotFile"
+                       accept="image/*">
+
+                <div class="confirmBtns">
+
+                    <button id="depositConfirmBtn">
+                        Confirm
+                    </button>
+
+                    <button id="helpBtn">
+                        Help
+                    </button>
+
+                </div>
+
+                <p id="depositConfirmMsg"
+                   class="message"></p>
+
+            </div>
+
+        </div>
+
+        <!-- ================= WITHDRAW ================= -->
+
+        <div id="withdrawBox" class="sectionBox">
+
+            <h3>Withdraw Amount</h3>
+
+            <label>Enter Amount To Withdraw</label>
+
+            <input type="number"
+                   id="withdrawAmount"
+                   min="100"
+                   max="50000"
+                   step="1"
+                   placeholder="Min 100 Max 50000">
+
+            <button id="withdrawSubmitBtn">
+                SUBMIT
+            </button>
+
+            <p id="withdrawMsg"
+               class="message"></p>
+
+            <div id="withdrawDetailsBox">
+
+                <h3>Bank Details</h3>
+
+                <div class="detailRow">
+                    <span>AC Number :</span>
+                    <span id="usrAcNo"></span>
+                </div>
+
+                <div class="detailRow">
+                    <span>IFSC :</span>
+                    <span id="usrIfsc"></span>
+                </div>
+
+                <div class="detailRow">
+                    <span>Bank :</span>
+                    <span id="usrBank"></span>
+                </div>
+
+                <div class="detailRow">
+                    <span>Name :</span>
+                    <span id="usrName"></span>
+                </div>
+
+                <button id="editBankBtn">
+                    Add / Update Bank Details
+                </button>
+
+                <button id="confirmWithdrawBtn">
+                    Confirm Withdrawal
+                </button>
+
+            </div>
+
+            <!-- UPDATE BANK -->
+
+            <div id="bankUpdateBox">
+
+                <h3>Update Bank Details</h3>
+
+                <label>Account Number</label>
+                <input type="text" id="updateAcNo">
+
+                <label>IFSC Code</label>
+                <input type="text" id="updateIfsc">
+
+                <label>Bank Name</label>
+                <input type="text" id="updateBank">
+
+                <label>Name</label>
+                <input type="text" id="updateName">
+
+                <button id="saveBankBtn">
+                    Submit
+                </button>
+
+                <p id="bankUpdateMsg"
+                   class="message"></p>
+
+            </div>
+
+        </div>
+
+        <!-- ================= GAME HISTORY ================= -->
+
+        <div id="gameHistoryBox" class="sectionBox">
+
+            <h3>Game History</h3>
+
+            <div class="tableWrapper">
+
+                <table>
+
+                    <thead>
+                        <tr>
+                            <th>GAME</th>
+                            <th>PBALANCE</th>
+                            <th>BET</th>
+                            <th>WIN/LOSS</th>
+                            <th>FINALBALANCE</th>
+                            <th>DATE & TIME</th>
+                        </tr>
+                    </thead>
+
+                    <tbody id="gameHistoryBody">
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </div>
+
+        <!-- ================= STATEMENT ================= -->
+
+        <div id="statementBox" class="sectionBox">
+
+            <h3>Account Statement</h3>
+
+            <div class="tableWrapper">
+
+                <table>
+
+                    <thead>
+                        <tr>
+                            <th>DATE & TIME</th>
+                            <th>DEPOSIT</th>
+                            <th>WITHDRAW</th>
+                            <th>STATUS</th>
+                            <th>REASON</th>
+                        </tr>
+                    </thead>
+
+                    <tbody id="statementBody">
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </div>
+
+        <!-- Password Reset box-->
+        <div id="pwrdResetBox" class="sectionBox">
+
+         <h3> Password Reset</h3> 
+          
+         <input type="password"
+               id="currentPassword"
+               placeholder="Current Password">
+         <br><br>
+        <input type="password"
+               id="newPassword"
+               placeholder="New Password">
+        <br><br>
+        <input type="password"
+               id="confirmPassword"
+               placeholder="Confirm New Password">
+         <br><br> <br>
+        <button id="resetPasswordBtn">
+            Reset
+        </button>
+
+        </div>
+
+    </div>
+
+    <script type="module" src="supabase.js"></script>
+    <script type="module" src="account.js"></script>
 
 </body>
+
 </html>

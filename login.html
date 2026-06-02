@@ -179,7 +179,9 @@ window.loginUser = async function() {
     // LOGIN SUCCESS
 
     alert("Login Successful");
-
+    sessionStorage.setItem("isLoggedIn", "true");
+    
+   // document.getElementById("accountBtn").style.display = "inline-block";
     // STORE USER DETAILS
     sessionStorage.setItem("loggedUser", data.username);
 
@@ -266,7 +268,8 @@ async function sendPassword(){
     .from("UserDetails")
     .select("*")
     .eq("username", uname)
-    .eq("phoneno", phone);
+    .eq("phoneno", phone)
+    .eq("activeuser",true);
 
     if(error){
 

@@ -147,15 +147,7 @@
                 placeholder="Enter Username">
         </div>
 
-        <!-- PASSWORD -->
-        <div class="inputBox">
-            <i class="fa-solid fa-lock"></i>
-
-            <input type="password"
-                id="password"
-                placeholder="Enter Password">
-        </div>
-
+        
         <!-- PHONE -->
         <div class="inputBox">
             <i class="fa-solid fa-phone"></i>
@@ -166,7 +158,7 @@
         </div>
 
         <div class="infoText">
-            Valid WhatsApp number only. Password will be sent here.
+            Valid WhatsApp number only.Password will be sent to this number.
         </div>
 
         <!-- MAIL -->
@@ -224,11 +216,7 @@
                 .value
                 .trim();
 
-            let password = document
-                .getElementById("password")
-                .value
-                .trim();
-
+            
             let phoneno = document
                 .getElementById("phoneno")
                 .value
@@ -270,25 +258,7 @@
 
 
 
-            // =========================
-            // PASSWORD VALIDATION
-            // =========================
-
-            let passwordPattern =
-                /^(?=.*[0-9])(?=.*[!@#$%^&*])[A-Za-z0-9!@#$%^&*]{5,}$/;
-
-            if (!passwordPattern.test(password)) {
-
-                message.innerHTML =
-                    "Password needs 5 chars, one number & one special symbol";
-
-                message.style.color = "red";
-
-                return;
-            }
-
-
-
+           
             // =========================
             // PHONE VALIDATION
             // =========================
@@ -377,7 +347,6 @@
                             uid: uid,
                             created: createdDate,
                             username: username,
-                            spassword: password,
                             phoneno: phoneno,
                             mail: mail,
                             alreadyexisted: false
@@ -413,7 +382,6 @@
 
             document.getElementById("username").value = "";
 
-            document.getElementById("password").value = "";
 
             document.getElementById("phoneno").value = "";
 

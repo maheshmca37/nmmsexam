@@ -17,8 +17,8 @@ window.onload = function() {
 
     if(user != null) {
 
-        loginButton.innerHTML = 'User: '+ sessionStorage.getItem("loggedUser") +'<br>'+'Bal: '+sessionStorage.getItem("AccountBalance");
-
+        loginButton.innerHTML = sessionStorage.getItem("loggedUser") +'<br>'+'Bal: '+sessionStorage.getItem("AccountBalance");
+        document.getElementById("accountBtn").style.display = "inline-block";
     }
     else {
 
@@ -30,6 +30,9 @@ window.onload = function() {
 
 </script>
 
+
+
+
 <body>
 
     <!-- Top Right Buttons -->
@@ -37,8 +40,14 @@ window.onload = function() {
         <button id="loginBtn" onclick="location.href='login.html'">
     Login
 </button>
-        <button onclick="location.href='signup.html'">Sign Up</button>
-        <button onclick="location.href='account.html'">Account</button>
+        <button id="signupLogoutBtn">Sign Up</button>
+
+        <button id="accountBtn"
+        onclick="location.href='account.html'"
+        style="display:none;">
+         Account
+        </button>
+
     </div>
 
     <!-- Headings -->
@@ -63,6 +72,41 @@ window.onload = function() {
         <button onclick="location.href='game10.html'">Game 10</button>
 
     </div>
+
+
+<script>
+
+  const btn = document.getElementById("signupLogoutBtn");
+
+if (sessionStorage.getItem("isLoggedIn") === "true") {
+
+    btn.textContent = "Log Out";
+
+    btn.onclick = function () {
+
+       const result = confirm("Are you sure you want to log out?");
+
+      if (!result) {
+        return;
+      }
+
+        sessionStorage.clear();
+
+        window.location.href = "index.html";
+    };
+
+} else {
+
+    btn.textContent = "Sign Up";
+
+    btn.onclick = function () {
+
+        window.location.href = "signup.html";
+    };
+}
+
+</script>
+
     
 </body>
 
