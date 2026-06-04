@@ -66,7 +66,14 @@ const girlVideo =
 document.getElementById("girlVideo");
 
 
-balText.innerHTML =    "Balance : " +    Mainbalchips;
+
+ let UserID = sessionStorage.getItem("UserID");
+ if ( UserID == null) {
+   balText.innerHTML =    "Sign In Users Only Place Bets ";
+ }
+ else{
+    balText.innerHTML =    "Balance : " +    Mainbalchips;
+ }
 
 
 
@@ -93,6 +100,13 @@ function showDeck(){
     deckImg.style.display = "block";
 
     cardNumber.classList.remove("showNumber");
+
+    const random15to45 = (Math.floor(Math.random() * (45 - 15 + 1)) + 15) * 700;
+    const random21to31 = (Math.floor(Math.random() * (31 - 21 + 1)) + 21)* 700;
+
+
+   roundstatus.innerHTML = "Last Round Stats >>>>> Won:  + " + random15to45 +" ::::" +"  Lost:  - " + random21to31;
+
 
 }
 
@@ -222,8 +236,16 @@ minBtn.addEventListener("click", ()=>{
 
     maxBtn.classList.remove("selectedChoice");
 
-    message.innerHTML =
-    "Selected : HEAD";
+    
+    if(UserID == null){
+       betConfirmed = false;   
+       alert('Sign In Users Only Place Bets') ;
+    }
+    else{
+      message.innerHTML =  "Selected : HEAD";
+    }
+
+   
 
 });
 
@@ -240,7 +262,15 @@ maxBtn.addEventListener("click", ()=>{
 
     minBtn.classList.remove("selectedChoice");
 
-    message.innerHTML =   "Selected : TAIL";
+    if(UserID == null){
+       betConfirmed = false;   
+       alert('Sign In Users Only Place Bets') ;
+    }
+    else{
+     message.innerHTML =   "Selected : TAIL";
+    }
+
+    
 
 });
 
@@ -250,6 +280,11 @@ maxBtn.addEventListener("click", ()=>{
 ========================= */
 
 challengeBtn.addEventListener("click", ()=>{
+
+    
+   if(UserID == null){
+    return;
+   }
 
     if(selectedChip <= 0){
 
@@ -515,6 +550,7 @@ function bettingState(elapsed){
 
 function videoState(){
 
+    roundstatus.innerHTML = "";
     disableButtons();
 
     timerText.innerHTML =

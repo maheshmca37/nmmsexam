@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+<meta charset="utf-8">
+
+<meta name="viewport"
+content="width=device-width,initial-scale=0">
+
+
+
+<title>Markets</title>
+
+<link rel="stylesheet"
+href="match.css">
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+</head>
+
+<body>
+<div class="mainContainer">
+    <div class="topbar">
+
+    <button onclick="location.href='index.html'" id="homeid">
+        🏠 HOME
+    </button>
+
+    <div id="acntbal">
+        💰 Balance: ₹
+    </div>
+
+</div>
+
+    <div id="matchTitle" class="matchTitle"></div>
+
+
+<div class="match-info-container">
+
+    <div class="info-box">
+        <div id="box1_f1">--</div>
+        <div id="box1_f2">--</div>
+        <div id="box1_f3">--</div>
+        <div id="box1_f4">--</div>
+    </div>
+
+    <div class="info-box">
+        <div id="box2_f1">--</div>
+        <div id="box2_f2">--</div>
+        <div id="box2_f3">--</div>
+        <div id="box2_f4">--</div>
+    </div>
+
+    <div class="info-box">
+        <div id="box3_f1">--</div>
+        <div id="box3_f2">--</div>
+        <div id="box3_f3">--</div>
+        <div id="box3_f4">--</div>
+    </div>
+
+</div>
+
+
+<div id="markets">
+</div>
+
+
+<div id="popup" class="popup">
+
+    <div class="popupBody">
+
+        <div
+        id="popupTitle"
+        class="popupTitle">
+        </div>
+       
+        <div class="amountGrid">
+
+            <button onclick="setAmount(100)">100</button>
+            <button onclick="setAmount(500)">500</button>
+            <button onclick="setAmount(1000)">1000</button>
+
+            <button onclick="setAmount(2000)">2000</button>
+            <button onclick="setAmount(5000)">5000</button>
+            <button onclick="setAmount(10000)">10000</button>
+
+        </div>
+
+        <div
+        id="selectedAmount"
+        class="selectedAmount">
+        </div>
+
+        <button
+        class="confirmBtn"
+        onclick="confirmBet()">
+
+            Confirm Bet
+
+        </button>
+
+        <button
+        class="cancelBtn"
+        onclick="closePopup()">
+
+            Cancel
+
+        </button>
+
+    </div>
+
+</div>
+</div>
+<script src="match.js"></script>
+
+</body>
+
+</html>

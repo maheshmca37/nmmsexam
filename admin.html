@@ -11,6 +11,8 @@
 
 <h1>Game2 [ HEAD OR TAIL ] Round Controller Running...</h1>
 
+<h1>Game3 [ ANDAR OR BAHAR ] Round Controller Running...</h1>
+
 <script type="module">
 
 import { createClient }
@@ -23,262 +25,150 @@ from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm'
 const supabase =
 createClient(supabaseUrl,supabaseKey);
 
-//game1 code  
 
-async function getCurrentRoundValue(){
+async function getCurrentRoundValue(rpcFunctionName){
 
-   const { data, error }
+    const { data, error } =
+    await supabase.rpc(rpcFunctionName);
 
-   = await supabase
+    if(error){
+        console.log(error);
+        return 5;
+    }
 
-   .rpc("sendgame1_curvalue");
-
-   if(error){
-
-      console.log(error);
-
-      return 5;
-   }
-
-   return data;
+    return data;
 }
 
-let isRunning = false;
 
-async function startNewRound_game1(){
+function startGame(gameName, tableName, rpcFunctionName){
 
-    try{
+    let isRunning = false;
 
-        if(isRunning) return;
+    async function runRound(){
 
-        isRunning = true;
+        try{
 
-        // GET CURRENT ROUND NUMBER
-        const {
-            data: roundData
+            if(isRunning) return;
+
+            isRunning = true;
+
+            // GET CURRENT ROUND
+            const { data: roundData,error  }
+            = await supabase
+            .from(tableName)
+            .select("round_no")
+            .eq("id",1)
+            .single();
+
+            console.log("GAME3 data:", roundData);
+            console.log("GAME3 error:", error);
+
+            let nextRound =
+            roundData.round_no + 1;
+
+            // START ROUND
+            await supabase
+            .from(tableName)
+            .update({
+
+                round_no: nextRound,
+
+                start_time:
+                new Date().toISOString(),
+
+                result_value: null
+
+            })
+            .eq("id",1);
+
+            console.log(
+                gameName +
+                " ROUND STARTED : ",
+                nextRound
+            );
+
+            // WAIT 27 SEC
+            await new Promise(resolve =>
+                setTimeout(resolve,27000)
+            );
+
+            // GENERATE RESULT
+            let resultValue =
+            await getCurrentRoundValue(
+                rpcFunctionName
+            );
+
+            await supabase
+            .from(tableName)
+            .update({
+
+                result_value:
+                resultValue
+
+            })
+            .eq("id",1);
+
+            console.log(
+                gameName +
+                " RESULT : ",
+                resultValue
+            );
+
         }
+        catch(err){
 
-        = await supabase
+            console.log(
+                gameName,
+                err
+            );
 
-        .from("game1_CurrentRound")
-
-        .select("round_no")
-
-        .eq("id",1)
-
-        .single();
-
-
-        let nextRound =
-        roundData.round_no + 1;
-
-
-        // START ROUND
-        await supabase
-
-        .from("game1_CurrentRound")
-
-        .update({
-
-            round_no: nextRound,
-
-            start_time:
-            new Date().toISOString(),
-
-            result_value: null
-
-        })
-
-        .eq("id",1);
-
-
-        console.log(
-            "GAME1 ROUND STARTED",
-            nextRound
-        );
-
-
-        // WAIT 27 SEC
-        await new Promise(resolve =>
-            setTimeout(resolve,27000)
-        );
-
-
-        // GENERATE RESULT
-        let value = await getCurrentRoundValue();
-
-
-        await supabase
-
-        .from("game1_CurrentRound")
-
-        .update({
-
-            result_value: value
-
-        })
-
-        .eq("id",1);
-
-
-        console.log(
-            "GAME1 RESULT : ",
-            value
-        );
-
-    }
-
-    catch(err){
-
-        console.log(err);
-
-    }
-
-    finally{
-
-        isRunning = false;
-
-        // NEXT ROUND AFTER 3 SEC
-        setTimeout(()=>{
-
-            startNewRound_game1();
-
-        },3000);
-
-    }
-}
-
-startNewRound_game1();
-
-
-// game2 code
-
-
-async function getCurrentRoundValue_game2(){
-
-   const { data, error }
-
-   = await supabase
-
-   .rpc("sendgame2_curvalue");
-
-   if(error){
-
-      console.log(error);
-
-      return 5;
-   }
-
-   return data;
-}
-
-let isRunning_game2 = false;
-
-async function startNewRound_game2(){
-
-    try{
-
-        if(isRunning_game2) return;
-
-        isRunning_game2 = true;
-
-        // GET CURRENT ROUND NUMBER
-        const {
-            data: roundData
         }
+        finally{
 
-        = await supabase
+            isRunning = false;
 
-        .from("game2_CurrentRound")
-
-        .select("round_no")
-
-        .eq("id",1)
-
-        .single();
-
-
-        let nextRound =
-        roundData.round_no + 1;
-
-
-        // START ROUND
-        await supabase
-
-        .from("game2_CurrentRound")
-
-        .update({
-
-            round_no: nextRound,
-
-            start_time:
-            new Date().toISOString(),
-
-            result_value: null
-
-        })
-
-        .eq("id",1);
-
-
-        console.log(
-            "GAME2 ROUND STARTED",
-            nextRound
-        );
-
-
-        // WAIT 27 SEC
-        await new Promise(resolve =>
-            setTimeout(resolve,27000)
-        );
-
-
-        // GENERATE RESULT
-        let value2 = await getCurrentRoundValue_game2();
-
-
-        await supabase
-
-        .from("game2_CurrentRound")
-
-        .update({
-
-            result_value: value2
-
-        })
-
-        .eq("id",1);
-
-
-        console.log(
-            "GAME2 RESULT : ",
-            value2
-        );
-
+            setTimeout(()=>{
+                runRound();
+            },3000);
+        }
     }
 
-    catch(err){
-
-        console.log(err);
-
-    }
-
-    finally{
-
-        isRunning_game2 = false;
-
-        // NEXT ROUND AFTER 3 SEC
-        setTimeout(()=>{
-
-            startNewRound_game2();
-
-        },3000);
-
-    }
+    runRound();
 }
 
-startNewRound_game2();
 
+const games = [
+
+    {
+        name: "GAME1",
+        table: "game1_CurrentRound",
+        rpc: "sendgame1_curvalue"
+    },
+
+    {
+        name: "GAME2",
+        table: "game2_CurrentRound",
+        rpc: "sendgame2_curvalue"
+    },
+    {
+        name: "GAME3",
+        table: "game3_CurrentRound",
+        rpc: "sendgame3_curvalue"
+    }
+
+];
+
+  
+
+games.forEach(game => {
+
+    startGame(
+        game.name,
+        game.table,
+        game.rpc
+    );
+
+});
 
 </script>
 

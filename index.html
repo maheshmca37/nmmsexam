@@ -19,6 +19,9 @@ window.onload = function() {
 
         loginButton.innerHTML = sessionStorage.getItem("loggedUser") +'<br>'+'Bal: '+sessionStorage.getItem("AccountBalance");
         document.getElementById("accountBtn").style.display = "inline-block";
+
+        loginBtn.disabled = true;
+
     }
     else {
 
@@ -60,16 +63,16 @@ window.onload = function() {
     <!-- Game Buttons -->
     <div class="games-container">
 
-        <button onclick="location.href='game1.html'">Game 1</button>
-        <button onclick="location.href='game2.html'">Game 2</button>
-        <button onclick="location.href='game3.html'">Game 3</button>
-        <button onclick="location.href='game4.html'">Game 4</button>
+        <button onclick="location.href='game1.html'">MIN MAX 6</button>
+        <button onclick="location.href='game2.html'">HEAD OR TAIL</button>
+        <button onclick="location.href='game3.html'">SUPER 7</button>
+        <button onclick="location.href='game4.html'">RED OR BLACK</button>
         <button onclick="location.href='game5.html'">Game 5</button>
         <button onclick="location.href='game6.html'">Game 6</button>
         <button onclick="location.href='game7.html'">Game 7</button>
         <button onclick="location.href='game8.html'">Game 8</button>
         <button onclick="location.href='game9.html'">Game 9</button>
-        <button onclick="location.href='game10.html'">Game 10</button>
+        <button onclick="location.href='crickethome.html'">Live Cricket</button>
 
     </div>
 

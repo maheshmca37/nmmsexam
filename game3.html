@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>SUPER 7</title>
+
+    <link rel="stylesheet" href="game3.css">
+</head>
+
+<body>
+    <script type="module" src="supabase.js"></script>
+
+    <h1>SUPER 7</h1>
+
+    <h2 id="lastResults">
+        Last Results : 6 , 2 , 10
+    </h2>
+
+    <h3 id="balText">
+        
+    </h3>
+
+    <div class="mainContainer">
+
+       <div class="gameRow">
+
+    <div class="girlBox">
+
+    <!-- GIRL -->
+    <video id="girlVideo"
+       autoplay
+       muted
+       playsinline>
+       
+    <source src="girlv.mp4"
+            type="video/mp4">
+
+    </video>
+
+    <!-- MOVING CARD -->
+    <div class="pickCardAnim"
+         id="pickCardAnim">
+
+        🂠
+
+    </div>
+
+</div>
+
+
+    <!-- CARD -->
+    <div class="cardBox">
+
+        <div class="card" id="gameCard">
+
+            <img id="deckImg"
+            src="card.JPG">
+
+            <div id="cardNumber">5</div>
+
+        </div>
+
+    </div>
+
+
+    <!-- BET AREA -->
+    <div class="betArea">
+
+
+        <!-- MIN MAX -->
+      <div class="buttonsArea">
+
+    <button class="minBtn"
+            id="minBtn">
+
+        MIN7
+
+    </button>
+
+    <button class="maxBtn"
+            id="maxBtn">
+
+        MAX7
+
+    </button>
+
+      </div>
+
+        <!-- CHIP BUTTONS -->
+        <div class="buttonsArea">
+
+            <button class="chipBtn">100</button>
+
+            <button class="chipBtn">200</button>
+
+            <button class="chipBtn">500</button>
+
+            <button class="chipBtn">1000</button>
+
+             <button class="chipBtn">5000</button>
+
+        </div>
+
+        <!-- CHALLENGE BUTTON -->
+        <div class="buttonsArea">
+
+            <button class="challengeBtn"
+                    id="challengeBtn">
+
+                CHALLENGE
+
+            </button>
+             
+
+        </div>
+
+    </div>
+
+</div>
+        <!-- TIMER -->
+        <div id="timer">
+            Waiting...
+        </div>
+
+        <!-- MESSAGE -->
+        <div id="message"></div>
+
+         <br><br>
+        <div id="roundstatus"> </div>
+
+        <div>
+            <br> <br> <button type="button" class="chipBtn" onclick="homepage()">  Home  </button>
+        </div>
+
+    </div>
+
+    <script src="game3.js"></script>
+
+    <script>
+        function homepage(){
+        window.location.href='index.html';
+        }
+    </script>
+
+</body>
+
+</html>

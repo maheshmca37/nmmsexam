@@ -4,8 +4,8 @@
 
 let Mainbalchips =  parseFloat(sessionStorage.getItem("AccountBalance"));
 
-let gameID = 101 ;
-let gameName = "MIN MAX 6"
+let gameID = 103 ;
+let gameName = "MIN7  OR MAX7"
 
 let rbetAmnt = 0.00 ;
 let rbetStatus = false;
@@ -18,7 +18,7 @@ let currentCardValue = 5;
 
 let betConfirmed = false;
 
-let resultHistory = [5,8,3];
+let resultHistory = ['6','2','10'];
 
 
 
@@ -43,9 +43,6 @@ document.getElementById("balText");
 const message =
 document.getElementById("message");
 
-const roundstatus =
-document.getElementById("roundstatus");
-
 const lastResults =
 document.getElementById("lastResults");
 
@@ -69,6 +66,7 @@ const girlVideo =
 document.getElementById("girlVideo");
 
 
+
  let UserID = sessionStorage.getItem("UserID");
  if ( UserID == null) {
    balText.innerHTML =    "Sign In Users Only Place Bets ";
@@ -76,7 +74,6 @@ document.getElementById("girlVideo");
  else{
     balText.innerHTML =    "Balance : " +    Mainbalchips;
  }
-
 
 
 
@@ -103,9 +100,9 @@ function showDeck(){
     deckImg.style.display = "block";
 
     cardNumber.classList.remove("showNumber");
-
-    const random15to45 = (Math.floor(Math.random() * (45 - 15 + 1)) + 15) * 700;
-    const random21to31 = (Math.floor(Math.random() * (31 - 21 + 1)) + 21)* 700;
+     
+   const random15to45 = (Math.floor(Math.random() * (45 - 15 + 1)) + 15) * 700;
+   const random21to31 = (Math.floor(Math.random() * (31 - 21 + 1)) + 21)* 700;
 
 
    roundstatus.innerHTML = "Last Round Stats >>>>> Won:  + " + random15to45 +" ::::" +"  Lost:  - " + random21to31;
@@ -116,38 +113,40 @@ function showDeck(){
 /* =========================
    SHOW RESULT CARD
 ========================= */
-
-function showResultCard(value){
+function showResultCard(value) {
 
     deckImg.style.display = "none";
 
-    cardNumber.innerHTML = value;
+    const cards = [
+        "", "A", "2", "3", "4", "5", "6",
+        "7", "8", "9", "10", "J", "Q", "K"
+    ];
+
+    cardNumber.innerHTML = cards[value] || "?";
 
     cardNumber.classList.add("showNumber");
-
 }
-
 
 /* =========================
    UPDATE HISTORY
 ========================= */
+function updateHistory(value) {
 
-function updateHistory(value){
+    const cards = [
+        "", "A", "2", "3", "4", "5", "6",
+        "7", "8", "9", "10", "J", "Q", "K"
+    ];
 
-    resultHistory.unshift(value);
+    resultHistory.unshift(cards[value] || "?");
 
-    if(resultHistory.length > 3){
-
+    if (resultHistory.length > 3) {
         resultHistory.pop();
-
     }
 
     lastResults.innerHTML =
-    "Last Results : " +
-    resultHistory.join(" , ");
-
+        "Last Results : " +
+        resultHistory.join(" , ");
 }
-
 
 /* =========================
    ENABLE BUTTONS
@@ -221,7 +220,7 @@ chipButtons.forEach(btn=>{
 
 minBtn.addEventListener("click", ()=>{
 
-    currentSelected = "MIN6";
+    currentSelected = "MIN7";
 
     minBtn.classList.add("selectedChoice");
 
@@ -233,8 +232,9 @@ minBtn.addEventListener("click", ()=>{
        alert('Sign In Users Only Place Bets') ;
     }
     else{
-      message.innerHTML =  "Selected : MIN6";
+      message.innerHTML =   "Selected : MIN7";
     }
+    
 
 });
 
@@ -245,20 +245,20 @@ minBtn.addEventListener("click", ()=>{
 
 maxBtn.addEventListener("click", ()=>{
 
-    currentSelected = "MAX6";
+    currentSelected = "MAX7";
 
     maxBtn.classList.add("selectedChoice");
 
     minBtn.classList.remove("selectedChoice");
 
-    
-    if(UserID == null){
+     if(UserID == null){
        betConfirmed = false;   
-       alert('Sign In Users Only Place Bets') 
+       alert('Sign In Users Only Place Bets') ;
     }
     else{
-       message.innerHTML = "Selected : MAX6";
+       message.innerHTML =   "Selected : MAX7";
     }
+    
 
 });
 
@@ -269,6 +269,7 @@ maxBtn.addEventListener("click", ()=>{
 
 challengeBtn.addEventListener("click", ()=>{
 
+    
    if(UserID == null){
     return;
    }
@@ -285,7 +286,7 @@ challengeBtn.addEventListener("click", ()=>{
     if(currentSelected == ""){
 
         message.innerHTML =
-        "Select MIN6 or MAX6";
+        "MIN7 OR MAX7";
 
         return;
 
@@ -301,15 +302,11 @@ challengeBtn.addEventListener("click", ()=>{
     }
 
     betConfirmed = true;
-    
-
 
 
     disableButtons();
 
-    message.innerHTML =
-    "Bet Confirmed : " +
-    currentSelected +
+    message.innerHTML =    "Bet Confirmed : " +    currentSelected +
     " | " +
     selectedChip;
 
@@ -321,7 +318,7 @@ async function updatecurbettoDB(currentSelected,selectedChip) {
   let cursel = currentSelected;
   let selchips = selectedChip;
   const { data, error } = await supabase
-  .from("game1_betvalue")
+  .from("game3_betvalue")
   .insert([
     {
       selected: cursel,
@@ -347,21 +344,21 @@ function processResult(){
 
     let won = false;
 
-    if(currentSelected == "MIN6" &&
-       currentCardValue < 6){
+    if(currentSelected == "MIN7" &&
+       currentCardValue <= 7 ){
 
         won = true;
 
     }
 
-    if(currentSelected == "MAX6" &&
-       currentCardValue > 6){
+    if(currentSelected == "MAX7" &&
+       currentCardValue >= 7){
 
         won = true;
 
     }
 
-    if(currentCardValue == 6){
+    if(currentCardValue == 7){
 
         won = false;
 
@@ -390,9 +387,8 @@ function processResult(){
     sessionStorage.setItem("AccountBalance", Mainbalchips);
 
 
-    balText.innerHTML =    "Balance : " + sessionStorage.getItem("AccountBalance");;
+    balText.innerHTML =    "Balance : " + sessionStorage.getItem("AccountBalance");
     
-
      updateUserDetailsToDB();
      updateUserActivityToDB();
 
@@ -454,8 +450,8 @@ const { data, error } = await supabase
 
 
 
-async function getCurrentRoundValue(){
-   const { data, error } = await supabase.rpc("sendgame1_curvalue");
+async function getCurrentRoundValue_game3(){
+   const { data, error } = await supabase.rpc("sendgame3_curvalue");
 
    return data;
 
@@ -541,9 +537,7 @@ function bettingState(elapsed){
 ========================= */
 
 function videoState(){
-
-     roundstatus.innerHTML = "";
-
+    roundstatus.innerHTML = "";
     disableButtons();
 
     timerText.innerHTML =
@@ -616,10 +610,7 @@ function waitState(){
    HANDLE GAME STATE
 ========================= */
 
-
 function handleGameState(elapsed,data){
-
-    
 
     // NEW ROUND DETECTED
     if(data.round_no != lastRoundNo){
@@ -656,7 +647,6 @@ function handleGameState(elapsed,data){
     }
 }
 
-
 /* =========================
    SYNC ROUND
 ========================= */
@@ -664,7 +654,7 @@ function handleGameState(elapsed,data){
 async function syncRound(){
 
     const { data, error } = await supabase
-    .from("game1_CurrentRound")
+    .from("game3_CurrentRound")
     .select("*")
     .eq("id",1)
     .single();

@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+<meta charset="utf-8">
+
+<meta name="viewport"
+content="width=device-width,initial-scale=1">
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<title>Cricket Markets</title>
+
+<link rel="stylesheet"
+href="crickethome.css">
+
+</head>
+
+<body>
+
+<div class="container">
+
+    <h2>Live Matches</h2>
+
+     <div class="matchArea" id="matchArea"></div>
+
+</div>
+
+
+<script>
+
+const SUPABASE_URL ='https://dbfycihbcosuxxkrmbhl.supabase.co';
+
+const SUPABASE_KEY ='sb_publishable_aOyXtAbzrrX0Z9jPAU1qEA_0ZnK35BX';
+
+const supabaseClient =
+supabase.createClient(
+SUPABASE_URL,
+SUPABASE_KEY
+);
+
+loadMatches();
+
+async function loadMatches()
+{
+    const { data, error } = await supabaseClient
+        .from('cmatches')
+        .select('mid,mname,mtime')
+        .order('mid');
+
+    if(error)
+    {
+        console.log(error);
+        return;
+    }
+
+    const matchArea =
+        document.getElementById("matchArea");
+
+    matchArea.innerHTML = "";
+
+    data.forEach(match =>
+    {
+        const btn =
+            document.createElement("button");
+
+        btn.className = "matchBtn";
+
+        btn.innerText = match.mname +' -- '+ match.mtime;
+
+        btn.onclick = function()
+        {
+            openMatch(
+                match.mid,
+                match.mname
+            );
+        };
+
+        matchArea.appendChild(btn);
+    });
+}
+
+function openMatch(mid,mname)
+{
+    localStorage.setItem(
+        "matchid",
+        mid
+    );
+
+    localStorage.setItem(
+        "matchname",
+        mname
+    );
+
+    location.href =
+        "match.html";
+}
+
+
+</script>
+
+
+</body>
+
+</html>

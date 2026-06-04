@@ -1,0 +1,365 @@
+body{
+    margin:0;
+    padding:0;
+    background:#121212;
+    font-family:Arial;
+    color:white;
+    text-align:center;
+    overflow-x:hidden;
+}
+
+h1{
+    color:#ffd700;
+    margin-top:10px;
+    font-size:26px;
+}
+
+h2{
+    color:#00e1ff;
+    font-size:20px;
+}
+
+h3{
+    color:#00ff99;
+    font-size:18px;
+}
+
+.mainContainer{
+    width:100%;
+    margin-top:10px;
+}
+
+.gameRow{
+    width:100%;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    gap:15px;
+    margin-top:15px;
+    flex-wrap:wrap;
+}
+
+/* VIDEO AREA */
+.girlBox{
+
+    width:120px;
+    height:170px;
+
+    position:relative;
+
+    display:flex;
+    justify-content:center;
+    align-items:center;
+
+    overflow:hidden;
+
+    border-radius:12px;
+
+    background:#000;
+
+}
+
+/* VIDEO STYLE */
+#girlVideo{
+
+    width:100%;
+    height:100%;
+
+    object-fit:cover;
+
+    border-radius:12px;
+
+}
+
+.cardBox{
+    width:90px;
+    height:130px;
+
+    display:flex;
+    justify-content:center;
+    align-items:center;
+}
+
+.betArea{
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+}
+
+.betArea .buttonsArea{
+    margin-top:8px;
+}
+
+.girlArea{
+    position:relative;
+    width:140px;
+    height:180px;
+    margin:auto;
+}
+
+/* CARD */
+.card{
+    width:75px;
+    height:110px;
+    background:white;
+    border-radius:10px;
+    border:3px solid black;
+    overflow:hidden;
+    position:relative;
+}
+
+#deckImg{
+    width:100%;
+    height:100%;
+}
+
+/* CARD NUMBER */
+#cardNumber{
+    position:absolute;
+    top:50%;
+    left:50%;
+    transform:translate(-50%,-50%);
+    font-size:38px;
+    color:red;
+    font-weight:bold;
+    display:none;
+}
+
+.showNumber{
+    display:block !important;
+}
+
+/* CARD PICK EFFECT */
+.pickAnim{
+    animation:pickCard 3s ease;
+}
+
+@keyframes pickCard{
+
+    0%{
+        transform:translateX(-50%) scale(0.5);
+        opacity:0;
+    }
+
+    50%{
+        transform:translateX(-50%) scale(1.1);
+        opacity:1;
+    }
+
+    100%{
+        transform:translateX(-50%) scale(1);
+        opacity:1;
+    }
+
+}
+
+/* BUTTONS */
+.buttonsArea{
+    margin-top:12px;
+}
+
+button{
+    padding:10px 16px;
+    margin:6px;
+    font-size:16px;
+    border:none;
+    border-radius:8px;
+    cursor:pointer;
+    font-weight:bold;
+}
+
+.minBtn{
+    background:#00aaff;
+    color:white;
+}
+
+.maxBtn{
+    background:#ff5500;
+    color:white;
+}
+
+.chipBtn{
+    background:#444;
+    color:white;
+}
+
+.challengeBtn{
+    background:#ffd700;
+    color:black;
+}
+
+.selectedChip{
+    background:#00cc66 !important;
+}
+
+.selectedChoice{
+    border:3px solid yellow !important;
+    transform:scale(1.05);
+}
+
+/* TIMER */
+#timer{
+    margin-top:10px;
+    font-size:22px;
+    color:#ffcc00;
+}
+
+/* MESSAGE */
+#message{
+    margin-top:10px;
+    font-size:18px;
+    color:#00ffcc;
+}
+
+/* GIRL IMAGE */
+.girl{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    border-radius:12px;
+    transition:all 0.5s ease;
+}
+
+/* SMILE EFFECT */
+.girlSmile{
+    transform:scale(1.02);
+    filter:brightness(1.1);
+}
+
+/* PICKING EFFECT */
+.girlPicking{
+    transform:translateX(8px) rotate(2deg);
+}
+
+/* MOVING CARD */
+.pickCardAnim{
+    position:absolute;
+    right:5px;
+    top:50px;
+    font-size:40px;
+    opacity:0;
+}
+
+/* CARD PICK ANIMATION */
+.animatePick{
+
+    animation:pickMove 3s ease;
+
+}
+
+@keyframes pickMove{
+
+    0%{
+        transform:translate(0px,0px)
+                   rotate(0deg)
+                   scale(0.5);
+
+        opacity:0;
+    }
+
+    30%{
+        opacity:1;
+    }
+
+    50%{
+        transform:translate(-25px,-15px)
+                   rotate(-15deg)
+                   scale(1.1);
+
+        opacity:1;
+    }
+
+    100%{
+        transform:translate(15px,-40px)
+                   rotate(10deg)
+                   scale(1);
+
+        opacity:0;
+    }
+
+}
+
+/* MOBILE RESPONSIVE */
+@media screen and (max-width:600px){
+
+    h1{
+        font-size:22px;
+    }
+
+    .gameRow{
+        gap:10px;
+    }
+
+    button{
+        font-size:14px;
+        padding:8px 12px;
+        margin:4px;
+    }
+
+    #timer{
+        font-size:20px;
+    }
+
+    #message{
+        font-size:16px;
+    }
+
+}
+
+
+/* DISABLED BUTTON EFFECT */
+
+button:disabled{
+
+    opacity:0.6;
+
+    cursor:not-allowed;
+
+}
+
+
+/* WAITING EFFECT */
+
+.waitingState{
+
+    opacity:0.7;
+
+    filter:grayscale(0.2);
+
+}
+
+
+/* RESULT FLASH */
+
+.resultFlash{
+
+    animation:resultGlow 1s ease infinite alternate;
+
+}
+
+@keyframes resultGlow{
+
+    from{
+
+        box-shadow:0 0 10px #ffd700;
+
+    }
+
+    to{
+
+        box-shadow:0 0 25px #ff5500;
+
+    }
+
+}
+
+
+/* SYNC MESSAGE */
+
+.syncText{
+
+    color:#00ff99;
+
+    font-weight:bold;
+
+}
