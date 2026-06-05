@@ -23,8 +23,8 @@ href="match.css">
 <div class="mainContainer">
     <div class="topbar">
 
-    <button onclick="location.href='index.html'" id="homeid">
-        🏠 HOME
+    <button  onclick="loadOPenBetDetails(1)"   id="homeid">
+        🏠 Open Bet
     </button>
      <button onclick="location.href='crickethome.html'" id="homeid">
         ◀ BACK
@@ -116,6 +116,18 @@ href="match.css">
 
 </div>
 </div>
+ <div id="openBetModal" class="modal">
+    <div class="modal-content">
+        <button class="closeBtn" onclick="closeOpenBetModal()">✖ Close</button>
+
+        <h3>Open Bets</h3>
+
+        <div id="openBetContent">
+            No Open Bets...
+        </div>
+    </div>
+</div>
+
 <script src="match.js"></script>
 
 </body>
