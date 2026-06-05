@@ -12,6 +12,7 @@ SUPABASE_KEY
 let currentMarketName='';
 let currentSide='';
 let currentRate=0;
+let currentRatio=0;
 let currentAmount=0;
 
 let popupOpen = false;
@@ -111,8 +112,8 @@ async function loadMarkets()
     
     const mainbal =  sessionStorage.getItem("AccountBalance");;
     const acntbal = document.getElementById("acntbal");
-
-    acntbal.innerHTML = "Balance: "+mainbal;
+    
+    acntbal.innerHTML = "💰 Balance: "+mainbal;
 
 
     const { data: blocks, error: blockError } =
@@ -200,7 +201,8 @@ async function loadMarkets()
                     `onclick="openBet(
                     ${m.id},
                     'NO',
-                    ${m.no_rate},
+                    ${m.no_val},
+                    ${m.no_ratio},
                     '${m.market_name}')"`
 
                     : ''
@@ -208,11 +210,11 @@ async function loadMarkets()
                         }>
 
                     <div class="rate">
-                        ${m.no_rate}
+                        ${m.no_val}
                     </div>
 
                     <div class="qty">
-                        ${m.no_qty}
+                        ${m.no_ratio}
                     </div>
 
                 </div>
@@ -226,18 +228,19 @@ async function loadMarkets()
                         `onclick="openBet(
                         ${m.id},
                         'YES',
-                        ${m.yes_rate},
+                        ${m.yes_val},
+                        ${m.yes_ratio},
                         '${m.market_name}')"`
 
                         : ''
 
                         }>
                     <div class="rate">
-                        ${m.yes_rate}
+                        ${m.yes_val}
                     </div>
 
                     <div class="qty">
-                        ${m.yes_qty}
+                        ${m.yes_ratio}
                     </div>
 
                 </div>
@@ -282,16 +285,14 @@ async function loadMarkets()
 });
 
     //When the page loads, old bets should also appear.
-    markets.forEach(m=>{
-    updateBetDisplay( m.id  );
-
-    });
+   // markets.forEach(m=>{    updateBetDisplay( m.id  );   });
 }
 
 function openBet(
 id,
 side,
 rate,
+ratio,
 name)
 {
     popupOpen = true;
@@ -299,6 +300,7 @@ name)
     currentMarketName=name;
     currentSide=side;
     currentRate=rate;
+    currentRatio=ratio;
 
     document.getElementById(
     'popup').style.display='flex';
@@ -322,8 +324,7 @@ function setAmount(amount)
     currentAmount=amount;
 
     document.getElementById(
-    'selectedAmount').innerHTML=
-    'Selected ₹'+amount;
+    'selectedAmount').innerHTML=    'Selected ₹'+amount;
 }
 
 async function confirmBet()
@@ -333,8 +334,9 @@ async function confirmBet()
         alert('Select Amount');
         return;
     }
-
-    if(currentAmount > mainbal){
+    
+    const mainbal1 =  sessionStorage.getItem("AccountBalance");;
+    if(currentAmount > mainbal1){
         alert('insufficient Balance');
         return;
     }
@@ -356,8 +358,10 @@ async function confirmBet()
         bet_side:
         currentSide,
 
-        rate:
+        yn_val:
         currentRate,
+
+        yn_ratio: currentRatio,
 
         bet_amount:
         currentAmount
@@ -370,9 +374,9 @@ async function confirmBet()
         return;
     }
 
-    await updateBetDisplay(currentMarketId);
+   // await updateBetDisplay(currentMarketId);
 
-    let updatedbal = mainbal - currentAmount;
+    let updatedbal = mainbal1 - currentAmount;
     sessionStorage.setItem("AccountBalance", updatedbal);
 
     alert('Bet Confirmed');
@@ -436,6 +440,7 @@ marketId
         'Bet : ₹' +
         (noTotal - yesTotal) +
         ' NO';
+ 
     }
     else
     if(yesTotal > noTotal)
@@ -469,6 +474,8 @@ function closePopup()
     currentSide = '';
 
     currentRate = 0;
+
+    currentRatio  = 0;
 }
 
 
