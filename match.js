@@ -17,7 +17,8 @@ let currentAmount=0;
 
 let popupOpen = false;
 
-const mainbal =  sessionStorage.getItem("AccountBalance");;
+const mainbal =  sessionStorage.getItem("AccountBalance");
+const userName = sessionStorage.getItem("loggedUser");
 
 
 const urlParams =
@@ -285,7 +286,7 @@ async function loadMarkets()
 });
 
     //When the page loads, old bets should also appear.
-   // markets.forEach(m=>{    updateBetDisplay( m.id  );   });
+    markets.forEach(m=>{    updateBetDisplay( m.id  );   });
 }
 
 function openBet(
@@ -347,7 +348,7 @@ async function confirmBet()
     .insert([{
 
 
-        user_name:'Mahesh',
+        user_name:userName,
 
         market_id:
         currentMarketId,
@@ -374,7 +375,7 @@ async function confirmBet()
         return;
     }
 
-   // await updateBetDisplay(currentMarketId);
+    await updateBetDisplay(currentMarketId);
 
     let updatedbal = mainbal1 - currentAmount;
     sessionStorage.setItem("AccountBalance", updatedbal);
@@ -408,7 +409,7 @@ marketId
     .from('c_user_bets')
     .select('bet_side,bet_amount')
     .eq('market_id', marketId)
-    .eq('user_name', 'Mahesh');
+    .eq('user_name', userName);
 
     if(error)
     {
@@ -418,6 +419,10 @@ marketId
 
     let noTotal = 0;
     let yesTotal = 0;
+
+    if (!data || data.length === 0) {
+      return;
+    }
 
     data.forEach(row=>{
 
@@ -451,11 +456,61 @@ marketId
         ' YES';
     }
 
-    document.getElementById(
-    'bet_' + marketId
-    ).innerHTML =
-    displayText;
+    //document.getElementById('bet_' + marketId).innerHTML = displayText;
+    document.getElementById('bet_' + marketId).innerHTML =
+    `<span class="detailsBtn" onclick="loadOPenBetDetails(${marketId})">▤</span>`;
 }
+
+
+async function loadOPenBetDetails(marketId) {
+
+    document.getElementById("openBetModal").style.display = "block";
+
+  
+
+    const { data, error } = await supabaseClient
+        .from("c_user_bets")
+        .select("market_name, bet_amount, bet_side, yn_val, yn_ratio")
+        .eq("user_name", userName);
+
+    if (error) {
+        document.getElementById("openBetContent").innerHTML =
+            "Error loading bets";
+        return;
+    }
+
+    let html = `
+        <table class="betTable">
+            <tr>
+                <th>MARKET</th>
+                <th>VALUE</th>
+                <th>BET AMOUNT</th>
+                <th>SIDE</th>
+                <th>RATIO</th>
+            </tr>
+    `;
+
+    data.forEach(row => {
+        html += `
+            <tr>
+                <td>${row.market_name}</td>
+                 <td>${row.yn_val}</td>
+                <td>${row.bet_amount}</td>
+                <td>${row.bet_side}</td>
+                <td>${row.yn_ratio}</td>
+            </tr>
+        `;
+    });
+
+    html += "</table>";
+
+    document.getElementById("openBetContent").innerHTML = html;
+}
+
+function closeOpenBetModal() {
+    document.getElementById("openBetModal").style.display = "none";
+}
+
 
 function closePopup()
 {
