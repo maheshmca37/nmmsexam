@@ -193,6 +193,9 @@ async function loadMarkets()
                 : ''}
 
                </div>
+                <div
+            id="bet_${m.id}"
+            class="betInfo"></div>
 
                 <div
                      class="noBox ${m.active ? '' : 'marketClosed'}"
@@ -246,11 +249,9 @@ async function loadMarkets()
 
                 </div>
 
-            </div>
+                           </div>
 
-            <div
-            id="bet_${m.id}"
-            class="betInfo"></div>
+           
                `;
 
         });
@@ -347,7 +348,7 @@ async function confirmBet()
     .from('c_user_bets')
     .insert([{
 
-
+        uid: sessionStorage.getItem("UserID"),
         user_name:userName,
 
         market_id:
@@ -377,27 +378,25 @@ async function confirmBet()
 
     await updateBetDisplay(currentMarketId);
 
-    let updatedbal = mainbal1 - currentAmount;
-    sessionStorage.setItem("AccountBalance", updatedbal);
+    //If same bet found then trigger updates main bal..so load from DB
+   // LoadCBalOfUserDetails();
+        
 
+   let  uid = sessionStorage.getItem("UserID");
+
+     const { data } = await supabaseClient
+    .from("UserDetails")
+    .select("CBal")
+    .eq("uid", uid)
+    .single();
+
+    sessionStorage.setItem("AccountBalance", data.CBal);
     alert('Bet Confirmed');
 
-    UpdateMainBalanceOfUserDetails();
+   // UpdateMainBalanceOfUserDetails();
 
     closePopup();
-}
-
-async function UpdateMainBalanceOfUserDetails (){
-
-    let Mainbalchips1 = parseFloat(sessionStorage.getItem("AccountBalance"));
-    let UserID = sessionStorage.getItem("UserID");
-
-   const { data, error } = await supabaseClient
-  .from("UserDetails")
-  .update({ CBal: Mainbalchips1 })
-  .eq("uid", UserID);
-
-
+    location.reload();
 }
 
 async function updateBetDisplay(
@@ -484,8 +483,8 @@ async function loadOPenBetDetails(marketId) {
             <tr>
                 <th>MARKET</th>
                 <th>VALUE</th>
-                <th>BET AMOUNT</th>
                 <th>SIDE</th>
+                <th>BET AMOUNT</th>
                 <th>RATIO</th>
             </tr>
     `;
@@ -495,8 +494,8 @@ async function loadOPenBetDetails(marketId) {
             <tr>
                 <td>${row.market_name}</td>
                  <td>${row.yn_val}</td>
-                <td>${row.bet_amount}</td>
                 <td>${row.bet_side}</td>
+                <td>${row.bet_amount}</td>
                 <td>${row.yn_ratio}</td>
             </tr>
         `;
